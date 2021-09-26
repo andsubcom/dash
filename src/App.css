@@ -1,0 +1,26 @@
+.chakra-ui-table {
+  width: 100%;
+}
+
+.chakra-ui-table thead tr {
+  text-align: left;
+}
+/* .chakra-ui-table th {
+  padding: 1rem;
+  text-align: left;
+}
+
+.chakra-ui-table td {
+  padding: 1rem;
+  text-align: left;
+} */
+
+.footer-nav-item:after {
+  content: "•";
+  display: inline-block;
+  margin-left: 0.5rem;
+}
+
+.footer-nav-item:last-child:after {
+  content: none;
+}
