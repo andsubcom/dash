@@ -3,9 +3,9 @@ import PropTypes from 'prop-types'
 import styled from '@emotion/styled'
 import { ifProp } from 'styled-tools'
 
-import { Document, Wallet } from 'react-iconly'
+import { Document, Wallet, People } from 'react-iconly'
 
-import { Flex, Button, Image, Box } from '@chakra-ui/react'
+import { Flex, Image } from '@chakra-ui/react'
 import { Link } from 'react-router-dom'
 
 function Header(props) {
@@ -30,6 +30,7 @@ function Header(props) {
       <MenuList>
         <MenuItem> <Flex marginRight='12px'> <Wallet set="bold" primaryColor="#a8aab2"/></Flex> Dashboard</MenuItem>
         <MenuItem active> <Flex marginRight='12px'> <Document set="bold" primaryColor="#3850fe"/></Flex> Subscriptions</MenuItem>
+        <MenuItem> <Flex marginRight='12px'> <People set="bold" primaryColor="#a8aab2"/></Flex> Organizations</MenuItem>
       </MenuList>
     </Flex>
   )

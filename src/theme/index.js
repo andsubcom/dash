@@ -3,8 +3,8 @@ import { extendTheme, theme } from "@chakra-ui/react"
 export default extendTheme({
   ...theme,
   fonts: {
-    heading: "Averta CY",
-    body: "Averta CY",
+    heading: "Averta",
+    body: "Averta",
   },
   colors: {
     ...theme.colors,

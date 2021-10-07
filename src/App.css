@@ -1,5 +1,23 @@
+@font-face {
+  font-family: 'Averta';
+  src: local('Averta'), url('./assets/fonts/Averta-Regular.woff') format('woff');
+  font-weight: 500;
+}
+
+@font-face {
+  font-family: 'Averta';
+  src: local('Averta'), url('./assets/fonts/Averta-Bold.woff') format('woff');
+  font-weight: 600;
+}
+
+@font-face {
+  font-family: 'Averta';
+  src: local('Averta'), url('./assets/fonts/Averta-Light.woff') format('woff');
+  font-weight: 400;
+}
+
 html, body {
-  font-family: 'Avenir CY';
+  font-family: 'Averta';
 }
 
 .chakra-ui-table {
