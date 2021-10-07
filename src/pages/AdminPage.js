@@ -9,7 +9,15 @@ import { Card } from 'elements'
 import styled from '@emotion/styled'
 import { PageHeader, PageContent, Table } from 'modules/admin'
 
+import { useSubscriptionInfoByOrg } from 'modules/subscription'
+
 const AdminPage = () => {
+
+  // const result = useGetSubscriptions(0)
+  // const result1 = useSubscriptionInfo(0)
+  const products = useSubscriptionInfoByOrg(0)
+
+  console.log('products', products)
 
   const subscriptions = [
     {
