@@ -9,17 +9,6 @@ import "./App.css"
 
 import Router from './router'
 
-client.configure({
-  url: process.env.REACT_APP_ZERION_ENDPOINT,
-  apiToken: process.env.REACT_APP_ZERION_API_TOKEN,
-  hooks: {
-    willSendRequest: request => {
-      return request
-    },
-  },
-})
-Object.assign(window, { client })
-
 const config = {
   readOnlyChainId: ChainId.Mainnet,
   readOnlyUrls: {
