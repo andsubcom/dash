@@ -1,5 +1,5 @@
 import React from "react";
-import { Container, Stack, Heading, Button } from "@chakra-ui/react";
+import { Box, Stack, Heading, Button } from "@chakra-ui/react";
 
 export default function PageContent({
   title = "",
@@ -38,7 +38,7 @@ export default function PageContent({
   const header =
     title || actions ? (
       <Stack direction="row" alignItems="top" marginBottom="1.5rem">
-        <Heading size="lg">{title}</Heading>
+        <Heading size="md">{title}</Heading>
         <Stack direction={["column", "row"]} style={{ marginLeft: "auto" }}>
           {actions}
         </Stack>
@@ -47,9 +47,9 @@ export default function PageContent({
       ""
     );
   return (
-    <Container width="960px" maxW="960px" paddingTop="1.5rem">
+    <Box>
       {header}
       {children}
-    </Container>
+    </Box>
   );
 }

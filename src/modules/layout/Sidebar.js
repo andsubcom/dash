@@ -53,7 +53,7 @@ const MenuItem = styled(Link)`
   display: flex;
   width: 220px;
   border-radius: 80px;
-  font-size: 18px;
+  font-size: 19px;
   line-height: 23px;
   letter-spacing: -0.02em;
   color: ${ifProp('active', '#3850fe', '#a8aab2')};

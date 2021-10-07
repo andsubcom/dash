@@ -8,17 +8,18 @@ export default extendTheme({
   },
   colors: {
     ...theme.colors,
-    main: {
-      50: "#fffff0",
-      100: "#fefcbf",
-      200: "#faf089",
-      300: "#f6e05e",
-      400: "#ecc94b",
-      500: "#d69e2e",
-      600: "#b7791f",
-      700: "#975a16",
-      800: "#744210",
-      900: "#5F370E"
+    main: 
+    {
+      50: '#e4ebff',
+      100: '#b2c1ff',
+      200: '#7f93ff',
+      300: '#4d63fe',
+      400: '#1e45fd',
+      500: '#063be3',
+      600: '#0139b2',
+      700: '#003280',
+      800: '#00244f',
+      900: '#000f1f',
     },
     secondary: {
       background: "#FBF7EF",

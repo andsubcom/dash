@@ -5,7 +5,7 @@ import styled from '@emotion/styled'
 import { useDisclosure, Flex, Box, Image, Heading, Text } from '@chakra-ui/react'
 import { ConnectButton, AccountModal } from 'modules/wallet'
 
-function PageHeader({ title, subtitle }) {
+function PageHeader({ title, subtitle, ...props }) {
   const { isOpen, onOpen, onClose } = useDisclosure()
 
   return (
@@ -13,7 +13,8 @@ function PageHeader({ title, subtitle }) {
       flexDirection='row'
       justifyContent='space-between'
       width='100%'
-      alignItems='center'>
+      alignItems='center'
+      {...props}>
       <Flex flexDirection='column'>
         <PageTitle>{ title }</PageTitle>
         <PageSubtitle>{ subtitle }</PageSubtitle>

@@ -16,31 +16,32 @@ export default function ConnectButton({ handleOpenModal }) {
     <Box
       display="flex"
       alignItems="center"
-      background="gray.700"
+      background="#fff"
       borderRadius="xl"
+      boxShadow='0px 18px 32px rgba(208, 210, 218, 0.20)'
       py="0"
     >
       <Box px="3">
-        <Text color="white" fontSize="md">
+        <Text color="#15192C" fontSize="md">
           {etherBalance && parseFloat(formatEther(etherBalance)).toFixed(3)} ETH
         </Text>
       </Box>
       <Button
         onClick={handleOpenModal}
-        bg="gray.800"
+        bg="#eaecfc"
         border="1px solid transparent"
         _hover={{
           border: "1px",
           borderStyle: "solid",
           borderColor: "blue.400",
-          backgroundColor: "gray.700",
+          backgroundColor: "#eaecfc",
         }}
         borderRadius="xl"
         m="1px"
         px={3}
         height="38px"
       >
-        <Text color="white" fontSize="md" fontWeight="medium" mr="2">
+        <Text color="#15192C" fontSize="md" fontWeight="medium" mr="2">
           {account &&
             `${account.slice(0, 6)}...${account.slice(
               account.length - 4,
