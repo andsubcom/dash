@@ -1,28 +1,60 @@
-import React, { useCallback } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
-import { Flex, Grid, Text, useDisclosure } from '@chakra-ui/react'
+import { Flex, Grid, Text, useDisclosure, Box, Stack, Heading, Button } from '@chakra-ui/react'
 import { prop } from 'styled-tools'
-import { formatFixed, formatUnits } from '@ethersproject/units'
+import { parseUnits, formatUnits } from '@ethersproject/units'
 
 import { Header, PageWrapper, Sidebar } from 'modules/layout'
 import { Paper, User, Graph } from 'react-iconly'
-import { Card } from 'elements'
+import { Card, Loader } from 'elements'
 import styled from '@emotion/styled'
 import { PageHeader, PageContent, Table } from 'modules/admin'
 
-import { SubscriptionModal, useSubscriptionInfoByOrg } from 'modules/subscription'
+import { SubscriptionModal, useSubscriptionInfoByOrg, useCreateProduct } from 'modules/subscription'
 
 import { TOKENS, SUBSCRIPTION_PERIODS } from 'utils/constants'
+import { usePrevious } from 'utils/hooks'
+
+const ORG_ID = 1
 
 const AdminPage = () => {
+  const [isMining, setIsMining] = useState(false)
+  const { state, send } = useCreateProduct()
+  const prevState = usePrevious(state)
+
   const { isOpen, onOpen, onClose } = useDisclosure()
   // const result = useGetSubscriptions(0)
   // const result1 = useSubscriptionInfo(0)
-  const products = useSubscriptionInfoByOrg(0)
+  const { products, refetch } = useSubscriptionInfoByOrg(ORG_ID)
+
+  useEffect(() => {
+    switch (state.status) {
+      case 'Mining':
+        setIsMining(true)
+        break
+      case 'Success':
+        refetch()
+        setIsMining(false)
+        break
+    
+      default:
+        setIsMining(false)
+        break
+    }
+  }, [state])
 
   const hadnleSubFormSubmit = useCallback((values) => {
+    const organizationId = ORG_ID
+    const name = values.name
+    const payableToken = values.token
+    const amount = parseUnits(values.amount + '', 18)
+    const period = +(values.period)
+
+    // show loader
+    console.log(values, 'organizationId, name, payableToken, amount, period', organizationId, name, payableToken, amount, period)
+    send(organizationId, name, payableToken, amount, period)
     onClose()
-  }, [onClose])
+  }, [onClose, send])
 
   // TODO: Add loader here
   if(!products) { return <></> }
@@ -65,6 +97,29 @@ const AdminPage = () => {
       title: "Subscribers",
     }
   ]
+
+  const renderSubButton = () => {
+    if(isMining) {
+      return (<Button
+        key="0"
+        onClick={() => {}}
+        disabled
+        colorScheme="main"
+        size="sm"
+      >
+        <Loader width={5} height={5} mr={2} /> Creating product
+      </Button>)
+    } else {
+      return (<Button
+        key="0"
+        onClick={onOpen}
+        colorScheme="main"
+        size="sm"
+      >
+        Add product
+      </Button>)
+    }
+  }
 
 
   return (
@@ -112,17 +167,18 @@ const AdminPage = () => {
             </Flex>
           </Grid>
         </Card>
-        <PageContent
-          title="Manage plans"
-          primaryAction={{
-            content: "Add Subscription",
-            onClick: onOpen,
-          }}
-        >
+        <Box>
+          <Stack direction="row" alignItems="top" marginBottom="1.5rem">
+            <Heading size="md">Manage products</Heading>
+            <Stack direction={["column", "row"]} style={{ marginLeft: "auto" }}>
+              { renderSubButton() }
+            </Stack>
+          </Stack>
           <Card width='800px'>
             <Table headers={subscriptionHeaders} items={subscriptions} />
           </Card>
-        </PageContent>
+        </Box>
+
       </PageContainer>
       <SubscriptionModal onSubmit={hadnleSubFormSubmit} isOpen={isOpen} onClose={onClose} />
     </PageWrapper>

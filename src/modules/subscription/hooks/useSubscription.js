@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react'
-import { useContractCall, useEthers } from '@usedapp/core'
+import { useEffect, useState, useCallback } from 'react'
+import { useContractCall, useContractFunction, useEthers } from '@usedapp/core'
 import { Contract } from 'ethers'
 import { Interface } from '@ethersproject/abi'
 import SUBSCRIPTION_HUB_ABI from 'assets/abi/SubscriptionsHub.json'
@@ -60,17 +60,28 @@ export const useSubscriptionInfoByOrg = (organizationId = 0) => {
   const { library } = useEthers()
   const [products, setProducts] = useState(null)
 
+  const fetch = useCallback(
+    async () => {
+      const products = await fetchSubscriptionsForOrganization(library, organizationId)
+      setProducts(products)
+    },
+    [library, organizationId],
+  )
+
   useEffect(() => {
     if (library) {
       async function f() {
-        const products = await fetchSubscriptionsForOrganization(library, organizationId)
-        setProducts(products)
+        await fetch()
       }
       f()
     }
-  }, [library, organizationId])
+  }, [library, fetch])
 
-  return products
+  return { products, refetch: fetch }
 }
 
-export default useGetSubscriptions;
+export const useCreateProduct = function() {
+  const abi = new Interface(SUBSCRIPTION_HUB_ABI)
+  const contract = new Contract(ANDSUB_HUB_ADDRESS, abi)
+  return useContractFunction(contract, 'createSubscription', { transactionName: 'Create Subscription'})
+}

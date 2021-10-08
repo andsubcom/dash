@@ -16,12 +16,13 @@ import {
 
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
+import { TOKENS, SUBSCRIPTION_PERIODS } from 'utils/constants'
 
 const FormInput = ({...props}) => (<Input
   borderRadius="15px"
   mb="24px"
   fontSize="sm"
-  type="number"
+  type="text"
   placeholder="Amount"
   size="lg"
   {...props}
@@ -47,9 +48,14 @@ export default function SubscriptionModal({ isOpen, onClose, onSubmit }) {
         .required('Required filed'),
       'amount': Yup.string()
         .required('Required filed'),
+      'period': Yup.string()
+        .required('Required filed'),
+      'token': Yup.string()
+        .required('Required filed'),
     }),
-    onSubmit: values => {
+    onSubmit: (values, { resetForm }) => {
       onSubmit(values)
+      resetForm()
     }
   })
 
@@ -96,43 +102,63 @@ export default function SubscriptionModal({ isOpen, onClose, onSubmit }) {
                   id={'name'}
                   value={formik.values['name']}
                   onChange={formik.handleChange}
-                  placeholder="Name" />
+                  placeholder='Name' />
               </FormControl>
               <FormControl isInvalid={formik.errors['amount'] && formik.touched['amount']}>
-                <FormLabel ms="4px" fontSize="sm" fontWeight="normal">
+                <FormLabel ms='4px' fontSize='sm' fontWeight='normal'>
                   Amount
                 </FormLabel>
                 <FormInput
                   name={'amount'}
                   id={'amount'}
+                  type='number'
                   value={formik.values['amount']}
                   onChange={formik.handleChange}
                   placeholder='Amount' />
               </FormControl>
               <FormControl isInvalid={formik.errors['period'] && formik.touched['period']}>
-                <FormLabel ms="4px" fontSize="sm" fontWeight="normal">
+                <FormLabel ms='4px' fontSize='sm' fontWeight='normal'>
                   Period
                 </FormLabel>
                 <FormSelect 
                   name={'period'}
                   id={'period'}
                   value={formik.values['period']}
-                  onChange={formik.handleChange} 
-                  placeholder="Period" >
-                  <option selected value="300">5 minutes</option>
-                  <option value="900">15 minutes</option>
-                  <option value="1800">30 minutes</option>
+                  onChange={formik.handleChange}
+                  placeholder='Period' >
+                  { 
+                    Object.keys(SUBSCRIPTION_PERIODS).map((key) => {
+                      return <option value={key}>{SUBSCRIPTION_PERIODS[key]}</option>
+                    }) 
+                  }
+                </FormSelect>
+               </FormControl>
+              <FormControl isInvalid={formik.errors['period'] && formik.touched['period']}>
+                <FormLabel ms='4px' fontSize='sm' fontWeight='normal'>
+                  Period
+                </FormLabel>
+                <FormSelect 
+                  name={'token'}
+                  id={'token'}
+                  value={formik.values['token']}
+                  onChange={formik.handleChange}
+                  placeholder='Token' >
+                  { 
+                    Object.keys(TOKENS).map((key) => {
+                      return <option value={TOKENS[key].address}>{TOKENS[key].symbol}</option>
+                    }) 
+                  }
                 </FormSelect>
                </FormControl>
                <Button
-                  fontSize="12px"
-                  type="submit"
+                  fontSize='12px'
+                  type='submit'
                   colorScheme='main'
-                  w="100%"
-                  h="45"
-                  mb="20px"
-                  color="white"
-                  mt="20px"
+                  w='100%'
+                  h='45'
+                  mb='20px'
+                  color='white'
+                  mt='20px'
                 >
                   CREATE
                 </Button>
@@ -165,12 +191,12 @@ export default function SubscriptionModal({ isOpen, onClose, onSubmit }) {
 //   return (
 //     <>
 //       <form onSubmit={formik.handleSubmit}>
-//         <FormControl width="100%" isInvalid={formik.errors[name] && formik.touched[name]}>
+//         <FormControl width='100%' isInvalid={formik.errors[name] && formik.touched[name]}>
 //           <FormLabel htmlFor={name}>Email</FormLabel>
 //           <TextInput
-//             focusBorderColor="primary"
-//             size="sm"
-//             rounded="4px"
+//             focusBorderColor='primary'
+//             size='sm'
+//             rounded='4px'
 //             name={name}
 //             id={name}
 //             value={formik.values[name]}
@@ -178,12 +204,12 @@ export default function SubscriptionModal({ isOpen, onClose, onSubmit }) {
 //             isDisabled={(isSubmitting && isLoading) || isInvited || isDisabled}
 //             isReadOnly={isInvited}
 //             placeholder={t('inviteModal.Enter email address')} />
-//           <FormErrorMessage mb="1">{formik.errors[name]}</FormErrorMessage>
+//           <FormErrorMessage mb='1'>{formik.errors[name]}</FormErrorMessage>
 //         </FormControl>
 
-//         <Box textAlign="center" width="100%" mt="6">
+//         <Box textAlign='center' width='100%' mt='6'>
 //           <Button
-//             type="submit"
+//             type='submit'
 //             size="md"
 //             variantColor="primary"
 //             minWidth="136px"
