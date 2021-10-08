@@ -13,14 +13,12 @@ import { PageHeader, PageContent, Table } from 'modules/admin'
 import { SubscriptionModal, useSubscriptionInfoByOrg, useCreateProduct } from 'modules/subscription'
 
 import { TOKENS, SUBSCRIPTION_PERIODS } from 'utils/constants'
-import { usePrevious } from 'utils/hooks'
 
 const ORG_ID = 1
 
 const AdminPage = () => {
   const [isMining, setIsMining] = useState(false)
   const { state, send } = useCreateProduct()
-  const prevState = usePrevious(state)
 
   const { isOpen, onOpen, onClose } = useDisclosure()
   // const result = useGetSubscriptions(0)
@@ -57,7 +55,7 @@ const AdminPage = () => {
   }, [onClose, send])
 
   // TODO: Add loader here
-  if(!products) { return <></> }
+  // if(!products) { return <></> }
 
   const subscriptions = products.map((product, i) => {
     const token = Object.keys(TOKENS).map(key => TOKENS[key]).find(token => token.address === product.payableToken)

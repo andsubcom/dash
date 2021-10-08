@@ -58,7 +58,7 @@ export const useGetSubscriptions = (organizationId) => {
 
 export const useSubscriptionInfoByOrg = (organizationId = 0) => {
   const { library } = useEthers()
-  const [products, setProducts] = useState(null)
+  const [products, setProducts] = useState([])
 
   const fetch = useCallback(
     async () => {

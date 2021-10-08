@@ -21,7 +21,7 @@ client.configure({
 Object.assign(window, { client })
 
 const config = {
-  readOnlyChainId: ChainId.Mainnet,
+  readOnlyChainId: ChainId.Ropsten,
   readOnlyUrls: {
     [ChainId.Mainnet]: 'https://mainnet.infura.io/v3/62687d1a985d4508b2b7a24827551934',
     [ChainId.Ropsten]: `https://eth-ropsten.alchemyapi.io/v2/${process.env.REACT_APP_ALCHEMY_API_KEY}`
