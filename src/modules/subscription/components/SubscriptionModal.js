@@ -14,31 +14,33 @@ import {
   FormControl,
   Switch,
   FormLabel,
-  Input
+  Input,
+  Select
 } from '@chakra-ui/react'
-import { ExternalLinkIcon, CopyIcon } from '@chakra-ui/icons'
-import { useEthers } from '@usedapp/core'
 
-import { Asset } from 'modules/wallet'
-import { useAddressAssets } from 'defi-sdk'
+const FormInput = ({...props}) => (<Input
+  borderRadius="15px"
+  mb="24px"
+  fontSize="sm"
+  type="number"
+  placeholder="Amount"
+  size="lg"
+  {...props}
+  />)
+
+const FormSelect = ({children,...props}) => (<Select
+  borderRadius="15px"
+  mb="24px"
+  fontSize="sm"
+  type="number"
+  placeholder="Amount"
+  size="lg"
+  {...props}
+  >
+    {children}
+  </Select>)
 
 export default function SubscriptionModal({ isOpen, onClose }) {
-  const { account, deactivate } = useEthers()
-
-  const assets = useAddressAssets(
-    {
-      currency: 'USD',
-      address: account || '',
-    },
-    {
-      enabled: Boolean(account),
-    },
-  )
-
-  function handleDeactivateAccount() {
-    deactivate()
-    onClose()
-  }
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} isCentered size='md'>
@@ -75,38 +77,21 @@ export default function SubscriptionModal({ isOpen, onClose }) {
           >
             <FormControl>
               <FormLabel ms="4px" fontSize="sm" fontWeight="normal">
-                ID
-              </FormLabel>
-              <Input
-                borderRadius="15px"
-                mb="24px"
-                fontSize="sm"
-                type="text"
-                placeholder="ID"
-                size="lg"
-              />
-              <FormLabel ms="4px" fontSize="sm" fontWeight="normal">
                 Name
               </FormLabel>
-              <Input
-                borderRadius="15px"
-                mb="24px"
-                fontSize="sm"
-                type="text"
-                placeholder="Name"
-                size="lg"
-              />
+              <FormInput placeholder="Name" />
               <FormLabel ms="4px" fontSize="sm" fontWeight="normal">
                 Amount
               </FormLabel>
-              <Input
-                borderRadius="15px"
-                mb="24px"
-                fontSize="sm"
-                type="number"
-                placeholder="Amount"
-                size="lg"
-              />
+              <FormInput placeholder="Amount" />
+              <FormLabel ms="4px" fontSize="sm" fontWeight="normal">
+                Period
+              </FormLabel>
+              <Select placeholder="Period" >
+                <option value="300">5 minutes</option>
+                <option value="900">15 minutes</option>
+                <option value="1800">30 minutes</option>
+              </Select>
               <Button
                 fontSize="12px"
                 type="submit"
