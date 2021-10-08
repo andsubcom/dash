@@ -11,7 +11,7 @@ export default function ConnectButton({ handleOpenModal }) {
   function handleConnectWallet() {
     activateBrowserWallet()
   }
-  console.log('etherBalance', etherBalance, account)
+
   return account ? (
     <Box
       display="flex"

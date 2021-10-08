@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Flex, Grid, Text } from '@chakra-ui/react'
+import { Flex, Grid, Text, useDisclosure } from '@chakra-ui/react'
 import { prop } from 'styled-tools'
 import { formatFixed, formatUnits } from '@ethersproject/units'
 
@@ -10,11 +10,12 @@ import { Card } from 'elements'
 import styled from '@emotion/styled'
 import { PageHeader, PageContent, Table } from 'modules/admin'
 
-import { useSubscriptionInfoByOrg } from 'modules/subscription'
+import { SubscriptionModal, useSubscriptionInfoByOrg } from 'modules/subscription'
 
 import { TOKENS, SUBSCRIPTION_PERIODS } from 'utils/constants'
 
 const AdminPage = () => {
+  const { isOpen, onOpen, onClose } = useDisclosure()
   // const result = useGetSubscriptions(0)
   // const result1 = useSubscriptionInfo(0)
   const products = useSubscriptionInfoByOrg(0)
@@ -111,9 +112,7 @@ const AdminPage = () => {
           title="Manage plans"
           primaryAction={{
             content: "Add Subscription",
-            onClick: () => {
-              alert('organization_1')
-            },
+            onClick: onOpen,
           }}
         >
           <Card width='800px'>
@@ -121,6 +120,7 @@ const AdminPage = () => {
           </Card>
         </PageContent>
       </PageContainer>
+      <SubscriptionModal isOpen={isOpen} onClose={onClose} />
     </PageWrapper>
   )
 }
