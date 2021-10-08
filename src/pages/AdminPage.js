@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Flex, Grid, Text } from '@chakra-ui/react'
 import { prop } from 'styled-tools'
+import { formatFixed, formatUnits } from '@ethersproject/units'
 
 import { Header, PageWrapper, Sidebar } from 'modules/layout'
 import { Paper, User, Graph } from 'react-iconly'
@@ -11,52 +12,53 @@ import { PageHeader, PageContent, Table } from 'modules/admin'
 
 import { useSubscriptionInfoByOrg } from 'modules/subscription'
 
-const AdminPage = () => {
+import { TOKENS, SUBSCRIPTION_PERIODS } from 'utils/constants'
 
+const AdminPage = () => {
   // const result = useGetSubscriptions(0)
   // const result1 = useSubscriptionInfo(0)
   const products = useSubscriptionInfoByOrg(0)
 
-  console.log('products', products)
+  // TODO: Add loader here
+  if(!products) { return <></> }
 
-  const subscriptions = [
-    {
-      name: "Subscription 1",
-      subscribers: 1249,
-      amount: "50$",
-      period: "month",
-    },
-    {
-      name: "Subscription 2",
-      subscribers: 149,
-      amount: "150$",
-      period: "year",
-    },
-    {
-      name: "Subscription 3",
-      subscribers: 193,
-      amount: "150$",
-      period: "year",
-    },
-  ]
+  const subscriptions = products.map((product, i) => {
+    const token = Object.keys(TOKENS).map(key => TOKENS[key]).find(token => token.address === product.payableToken)
+    return {
+      id: i,
+      name: `Subscription ${i}`,
+      amount: formatUnits(product.amount, token.decimals),
+      token: token.symbol,
+      period: SUBSCRIPTION_PERIODS[product.period.toNumber()],
+      subscribers: 15
+    }
+  })
 
   const subscriptionHeaders = [
     {
-      id: "name",
-      title: "Name",
+      id: "id",
+      title: "ID",
     },
     {
-      id: "subscribers",
-      title: "Subscribers",
+      id: "name",
+      title: "Name",
     },
     {
       id: "amount",
       title: "Amount",
     },
     {
+      id: "token",
+      title: "Token",
+    },
+    {
       id: "period",
       title: "Period",
     },
+    {
+      id: "subscribers",
+      title: "Subscribers",
+    }
   ]
 
 
