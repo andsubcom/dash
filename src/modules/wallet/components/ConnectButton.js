@@ -4,12 +4,47 @@ import { useEthers, useEtherBalance } from "@usedapp/core"
 import { formatEther } from "@ethersproject/units"
 import Identicon from "./Identicon"
 
-export default function ConnectButton({ handleOpenModal }) {
+export default function ConnectButton({ handleOpenModal, buttonOnly }) {
   const { activateBrowserWallet, account } = useEthers()
   const etherBalance = useEtherBalance(account)
 
   function handleConnectWallet() {
     activateBrowserWallet()
+  }
+
+  const renderConnectButton = () => {
+    return (
+      <Box
+        display="flex"
+        alignItems="center"
+        background="#fff"
+        borderRadius="xl"
+        boxShadow='0px 18px 32px rgba(208, 210, 218, 0.20)'
+        py="0"
+      >
+        <Button
+          onClick={handleConnectWallet}
+          bg="main.400"
+          color="#fff" 
+          fontSize="md" 
+          fontWeight="medium"
+          borderRadius="xl"
+          border="1px solid transparent"
+          _hover={{
+            border: "1px",
+            borderStyle: "solid",
+            borderColor: "main.300",
+            backgroundColor: "main.300",
+          }}
+        >
+          Connect to a wallet
+        </Button>
+      </Box>
+    )
+  }
+
+  if(buttonOnly) {
+    return renderConnectButton()
   }
 
   return account ? (
@@ -52,24 +87,6 @@ export default function ConnectButton({ handleOpenModal }) {
       </Button>
     </Box>
   ) : (
-    <Button
-      onClick={handleConnectWallet}
-      bg="blue.800"
-      color="blue.300"
-      fontSize="lg"
-      fontWeight="medium"
-      borderRadius="xl"
-      border="1px solid transparent"
-      _hover={{
-        borderColor: "blue.700",
-        color: "blue.400",
-      }}
-      _active={{
-        backgroundColor: "blue.800",
-        borderColor: "blue.700",
-      }}
-    >
-      Connect to a wallet
-    </Button>
+    renderConnectButton()
   )
 }
