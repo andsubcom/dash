@@ -142,23 +142,6 @@ export default function AccountModal({ isOpen, onClose }) {
             </Flex>
           </Box>
         </ModalBody>
-
-        <ModalFooter
-          justifyContent='end'
-          background='gray.700'
-          borderBottomLeftRadius='3xl'
-          borderBottomRightRadius='3xl'
-          p={6}
-        >
-          <Flex
-            width='100%'
-            flexDirection='column'
-          >
-            {Object.entries(assets.value || {})?.map(([code, asset]) => (
-              <Asset key={code} addressAsset={asset} />
-            ))}
-          </Flex>
-        </ModalFooter>
       </ModalContent>
     </Modal>
   )

@@ -1,7 +1,16 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { Redirect } from 'react-router-dom'
 
-function AdminLayout({ children }) {
+import { useEthers } from "@usedapp/core"
+
+function ADminLayout({ children }) {
+  const { account } = useEthers()
+  console.log('account', account)
+  if(!account) {
+    return <Redirect to='/login' />
+  }
+
   return (
     <>
       { children }
@@ -9,8 +18,9 @@ function AdminLayout({ children }) {
   )
 }
 
-AdminLayout.propTypes = {
+ADminLayout.propTypes = {
   children: PropTypes.node.isRequired
 }
 
-export default AdminLayout
+export default ADminLayout
+

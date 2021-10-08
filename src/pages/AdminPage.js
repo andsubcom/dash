@@ -14,7 +14,7 @@ import { SubscriptionModal, useSubscriptionInfoByOrg, useCreateProduct } from 'm
 
 import { TOKENS, SUBSCRIPTION_PERIODS } from 'utils/constants'
 
-const ORG_ID = 1
+const ORG_ID = 0
 
 const AdminPage = () => {
   const [isMining, setIsMining] = useState(false)
