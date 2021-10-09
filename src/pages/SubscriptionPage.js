@@ -93,7 +93,6 @@ const SubscriptionPage = () => {
     return fetch("https://api.nftport.xyz/v0/metadata", options)
       .then(response => { return response.json() })
       .then(json => { return json["metadata_uri"] })
-      .catch(err => { console.error(err) })
   }
 
   const hadnleSubFormSubmit = useCallback((values) => {
@@ -108,7 +107,10 @@ const SubscriptionPage = () => {
     const uploadMetadataWithImageUrl = (imageUrl) => { return uploadMetadata(name, description, imageUrl) }
 
     const sendSubscriptionToSmartContract = (metadataUri) => {
-      // show loader
+      if (nftImage && !metadataUri) {
+        // TODO: notify user about image loading failure
+        return
+      }
       console.log(metadataUri)
       // TODO: pass URI to create product call
       send(organizationId, name, payableToken, amount, period)
@@ -117,6 +119,7 @@ const SubscriptionPage = () => {
     uploadFileToIPFSUsingNFTPort(nftImage)
       .then(uploadMetadataWithImageUrl)
       .then(sendSubscriptionToSmartContract)
+      .catch(err => { console.error(err) })
 
     onClose()
 
