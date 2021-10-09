@@ -19,7 +19,7 @@ const Element = styled(Flex)`
   position: relative;
   background: #fff;
   box-shadow: 0px 18px 32px rgba(208, 210, 218, 0.15);
-  border-radius: 24px;
+  border-radius: 4px;
 `
 
 export default Card

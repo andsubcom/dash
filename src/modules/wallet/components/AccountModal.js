@@ -32,7 +32,7 @@ export default function AccountModal({ isOpen, onClose }) {
         border='1px'
         borderStyle='solid'
         borderColor='gray.700'
-        borderRadius='3xl'
+        borderRadius='4px'
       >
         <ModalHeader color='white' px={4} fontSize='lg' fontWeight='medium'>
           Account
@@ -46,7 +46,7 @@ export default function AccountModal({ isOpen, onClose }) {
         />
         <ModalBody pt={0} px={4}>
           <Box
-            borderRadius='3xl'
+            borderRadius='4px'
             border='1px'
             borderStyle='solid'
             borderColor='gray.600'
@@ -63,7 +63,7 @@ export default function AccountModal({ isOpen, onClose }) {
                 variant='outline'
                 size='sm'
                 borderColor='blue.800'
-                borderRadius='3xl'
+                borderRadius='4px'
                 color='blue.500'
                 fontSize='13px'
                 fontWeight='normal'

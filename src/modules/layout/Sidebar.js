@@ -14,9 +14,8 @@ function Header(props) {
     <Flex 
       flexDirection='column'
       bg='#fff'
-      width='320px'
-      height='100%'
-      padding='20px'>
+      width='280px'
+      height='100%'>
       <Link to='/'>
         <Flex flexDirection='row' alignItems='center' justifyContent='center' ml='-12px' mt='38px' mb='55px'>
           <Image
@@ -56,8 +55,7 @@ const MenuList = styled(Flex)`
 
 const MenuItem = styled(Link)`
   display: flex;
-  width: 220px;
-  border-radius: 80px;
+  width: 280px;
   font-size: 19px;
   line-height: 23px;
   letter-spacing: -0.02em;
