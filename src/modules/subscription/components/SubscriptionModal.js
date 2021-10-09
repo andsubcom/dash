@@ -19,7 +19,7 @@ import * as Yup from 'yup'
 import { TOKENS, SUBSCRIPTION_PERIODS } from 'utils/constants'
 
 const FormInput = ({...props}) => (<Input
-  borderRadius="15px"
+  borderRadius="4px"
   mb="24px"
   fontSize="sm"
   type="text"
@@ -29,7 +29,7 @@ const FormInput = ({...props}) => (<Input
   />)
 
 const FormSelect = ({children,...props}) => (<Select
-  borderRadius="15px"
+  borderRadius="4px"
   mb="24px"
   fontSize="sm"
   type="number"
@@ -46,6 +46,7 @@ export default function SubscriptionModal({ isOpen, onClose, onSubmit }) {
     validationSchema: Yup.object({
       'name': Yup.string()
         .required('Required filed'),
+      'description': Yup.string(),
       'amount': Yup.string()
         .required('Required filed'),
       'period': Yup.string()
@@ -59,6 +60,10 @@ export default function SubscriptionModal({ isOpen, onClose, onSubmit }) {
     }
   })
 
+  const uploadImage = (event) => {
+    formik.values['nftImage'] = event.target.files[0]
+  }
+
   return (
     <Modal isOpen={isOpen} onClose={onClose} isCentered size='md'>
       <ModalOverlay />
@@ -67,7 +72,7 @@ export default function SubscriptionModal({ isOpen, onClose, onSubmit }) {
         border='1px'
         borderStyle='solid'
         borderColor='whiteAlpha.700'
-        borderRadius='3xl'
+        borderRadius='4px'
       >
         <ModalHeader color='#15192C' px={4} fontSize='lg' fontWeight='medium'>
           Create Subscription
@@ -86,12 +91,12 @@ export default function SubscriptionModal({ isOpen, onClose, onSubmit }) {
           style={{ userSelect: "none" }}
           w={{ base: "100%"}}
         >
-          <Flex
-            direction="column"
-            w="100%"
-            background="transparent"
-            p="12px"
-          >
+        <Flex
+          direction="column"
+          w="100%"
+          background="transparent"
+          p="12px"
+        >
             <form onSubmit={formik.handleSubmit}>
               <FormControl isInvalid={formik.errors['name'] && formik.touched['name']}>
                 <FormLabel ms="4px" fontSize="sm" fontWeight="normal">
@@ -102,11 +107,22 @@ export default function SubscriptionModal({ isOpen, onClose, onSubmit }) {
                   id={'name'}
                   value={formik.values['name']}
                   onChange={formik.handleChange}
-                  placeholder='Name' />
+                  placeholder='Enter name' />
+              </FormControl>
+              <FormControl isInvalid={formik.errors['description'] && formik.touched['description']}>
+                <FormLabel ms="4px" fontSize="sm" fontWeight="normal">
+                  Description
+                </FormLabel>
+                <FormInput
+                    name={'description'}
+                    id={'description'}
+                    value={formik.values['description']}
+                    onChange={formik.handleChange}
+                    placeholder='Enter optional NFT description' />
               </FormControl>
               <FormControl isInvalid={formik.errors['amount'] && formik.touched['amount']}>
                 <FormLabel ms='4px' fontSize='sm' fontWeight='normal'>
-                  Amount
+                  Price
                 </FormLabel>
                 <FormInput
                   name={'amount'}
@@ -114,7 +130,7 @@ export default function SubscriptionModal({ isOpen, onClose, onSubmit }) {
                   type='number'
                   value={formik.values['amount']}
                   onChange={formik.handleChange}
-                  placeholder='Amount' />
+                  placeholder='Enter price per period' />
               </FormControl>
               <FormControl isInvalid={formik.errors['period'] && formik.touched['period']}>
                 <FormLabel ms='4px' fontSize='sm' fontWeight='normal'>
@@ -125,7 +141,7 @@ export default function SubscriptionModal({ isOpen, onClose, onSubmit }) {
                   id={'period'}
                   value={formik.values['period']}
                   onChange={formik.handleChange}
-                  placeholder='Period' >
+                  placeholder='Select period' >
                   { 
                     Object.keys(SUBSCRIPTION_PERIODS).map((key) => {
                       return <option value={key}>{SUBSCRIPTION_PERIODS[key]}</option>
@@ -137,19 +153,26 @@ export default function SubscriptionModal({ isOpen, onClose, onSubmit }) {
                 <FormLabel ms='4px' fontSize='sm' fontWeight='normal'>
                   Token
                 </FormLabel>
-                <FormSelect 
+                <FormSelect
                   name={'token'}
                   id={'token'}
                   value={formik.values['token']}
                   onChange={formik.handleChange}
-                  placeholder='Token' >
-                  { 
+                  placeholder='Select token' >
+                  {
                     Object.keys(TOKENS).map((key) => {
-                      return <option value={TOKENS[key].address}>{TOKENS[key].symbol}</option>
+                      return <option value={TOKENS[key].address}>{`${TOKENS[key].name} (${TOKENS[key].symbol})`}</option>
                     }) 
                   }
                 </FormSelect>
                </FormControl>
+              <input
+                  type='file'
+                  id='nftImage'
+                  name='nftImage'
+                  onChange={uploadImage}
+                  accept='.jpg,.jpeg,.png,.svg'
+              />
                <Button
                   fontSize='12px'
                   type='submit'
