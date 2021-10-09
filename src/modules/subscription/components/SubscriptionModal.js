@@ -135,7 +135,7 @@ export default function SubscriptionModal({ isOpen, onClose, onSubmit }) {
                </FormControl>
               <FormControl isInvalid={formik.errors['period'] && formik.touched['period']}>
                 <FormLabel ms='4px' fontSize='sm' fontWeight='normal'>
-                  Period
+                  Token
                 </FormLabel>
                 <FormSelect 
                   name={'token'}

@@ -3,12 +3,14 @@ import PropTypes from 'prop-types'
 import styled from '@emotion/styled'
 import { ifProp } from 'styled-tools'
 
-import { Document, Wallet, People } from 'react-iconly'
+import { Document, Wallet} from 'react-iconly'
 
 import { Flex, Image } from '@chakra-ui/react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 
 function Header(props) {
+  const location = useLocation()
+
   return (
     <Flex 
       flexDirection='column'
@@ -19,18 +21,21 @@ function Header(props) {
       <Link to='/'>
         <Flex flexDirection='row' alignItems='center' justifyContent='center' ml='-12px' mt='38px' mb='55px'>
           <Image
-              marginLeft='6px'
-              marginRight='12px'
-              boxSize="42px"
-              src="/logo.png"
-            />
+            marginLeft='6px'
+            marginRight='12px'
+            boxSize="42px"
+            src="/logo.png"
+          />
           <LogoText>Andsub</LogoText>
         </Flex>
       </Link>
       <MenuList>
-        <MenuItem> <Flex marginRight='12px'> <Wallet set="bold" primaryColor="#a8aab2"/></Flex> Dashboard</MenuItem>
-        <MenuItem active> <Flex marginRight='12px'> <Document set="bold" primaryColor="#3850fe"/></Flex> Subscriptions</MenuItem>
-        <MenuItem> <Flex marginRight='12px'> <People set="bold" primaryColor="#a8aab2"/></Flex> Organizations</MenuItem>
+        <MenuItem to='/dashboard' active={location.pathname === '/dashboard'}> 
+          <Flex marginRight='12px'> <Wallet set="bold" primaryColor={location.pathname === '/dashboard' ? '#3850fe' : '#a8aab2'}/></Flex> Dashboard
+        </MenuItem>
+        <MenuItem to='/' active={location.pathname === '/'}> 
+          <Flex marginRight='12px'> <Document set="bold" primaryColor={location.pathname === '/' ? '#3850fe' : '#a8aab2'}/></Flex> Subscriptions
+        </MenuItem>
       </MenuList>
     </Flex>
   )
