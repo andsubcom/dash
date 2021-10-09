@@ -16,7 +16,7 @@ export default function ConnectButton({ handleOpenModal, buttonOnly }) {
         display="flex"
         alignItems="center"
         background="#fff"
-        borderRadius="xl"
+        borderRadius="4px"
         boxShadow='0px 18px 32px rgba(208, 210, 218, 0.20)'
         py="0"
       >
@@ -26,7 +26,7 @@ export default function ConnectButton({ handleOpenModal, buttonOnly }) {
           color="#fff" 
           fontSize="md" 
           fontWeight="medium"
-          borderRadius="xl"
+          borderRadius="4px"
           border="1px solid transparent"
           _hover={{
             border: "1px",
@@ -50,7 +50,7 @@ export default function ConnectButton({ handleOpenModal, buttonOnly }) {
       display="flex"
       alignItems="center"
       background="#fff"
-      borderRadius="xl"
+      borderRadius="4px"
       boxShadow='0px 18px 32px rgba(208, 210, 218, 0.20)'
       py="0"
     >
@@ -69,7 +69,7 @@ export default function ConnectButton({ handleOpenModal, buttonOnly }) {
           borderColor: "blue.400",
           backgroundColor: "#eaecfc",
         }}
-        borderRadius="xl"
+        borderRadius="4px"
         m="1px"
         px={3}
         height="38px"

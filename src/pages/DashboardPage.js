@@ -71,7 +71,7 @@ const PageContainer = styled(Flex)`
 const DashIconContainer = styled(Flex)`
   width: 63px;
   height: 63px;
-  border-radius: 16px;
+  border-radius: 4px;
   align-items: center;
   justify-content: center;
   background: ${prop('color')};

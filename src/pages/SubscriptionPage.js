@@ -204,8 +204,8 @@ const SubscriptionPage = () => {
               {renderSubButton()}
             </Stack>
           </Stack>
-          <Card width='800px'>
-            <Table
+          <Card width='1000px'>
+            <Table 
               headers={subscriptionHeaders}
               items={subscriptions}
               renderActions={(product) => {
