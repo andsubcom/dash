@@ -46,6 +46,7 @@ export default function SubscriptionModal({ isOpen, onClose, onSubmit }) {
     validationSchema: Yup.object({
       'name': Yup.string()
         .required('Required filed'),
+      'description': Yup.string(),
       'amount': Yup.string()
         .required('Required filed'),
       'period': Yup.string()
@@ -58,6 +59,10 @@ export default function SubscriptionModal({ isOpen, onClose, onSubmit }) {
       resetForm()
     }
   })
+
+  const uploadImage = (event) => {
+    formik.values['nftImage'] = event.target.files[0]
+  }
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} isCentered size='md'>
@@ -86,12 +91,12 @@ export default function SubscriptionModal({ isOpen, onClose, onSubmit }) {
           style={{ userSelect: "none" }}
           w={{ base: "100%"}}
         >
-          <Flex
-            direction="column"
-            w="100%"
-            background="transparent"
-            p="12px"
-          >
+        <Flex
+          direction="column"
+          w="100%"
+          background="transparent"
+          p="12px"
+        >
             <form onSubmit={formik.handleSubmit}>
               <FormControl isInvalid={formik.errors['name'] && formik.touched['name']}>
                 <FormLabel ms="4px" fontSize="sm" fontWeight="normal">
@@ -103,6 +108,17 @@ export default function SubscriptionModal({ isOpen, onClose, onSubmit }) {
                   value={formik.values['name']}
                   onChange={formik.handleChange}
                   placeholder='Name' />
+              </FormControl>
+              <FormControl isInvalid={formik.errors['description'] && formik.touched['description']}>
+                <FormLabel ms="4px" fontSize="sm" fontWeight="normal">
+                  Description
+                </FormLabel>
+                <FormInput
+                    name={'description'}
+                    id={'description'}
+                    value={formik.values['description']}
+                    onChange={formik.handleChange}
+                    placeholder='Description' />
               </FormControl>
               <FormControl isInvalid={formik.errors['amount'] && formik.touched['amount']}>
                 <FormLabel ms='4px' fontSize='sm' fontWeight='normal'>
@@ -137,19 +153,26 @@ export default function SubscriptionModal({ isOpen, onClose, onSubmit }) {
                 <FormLabel ms='4px' fontSize='sm' fontWeight='normal'>
                   Token
                 </FormLabel>
-                <FormSelect 
+                <FormSelect
                   name={'token'}
                   id={'token'}
                   value={formik.values['token']}
                   onChange={formik.handleChange}
                   placeholder='Token' >
-                  { 
+                  {
                     Object.keys(TOKENS).map((key) => {
                       return <option value={TOKENS[key].address}>{TOKENS[key].symbol}</option>
                     }) 
                   }
                 </FormSelect>
                </FormControl>
+              <input
+                  type='file'
+                  id='nftImage'
+                  name='nftImage'
+                  onChange={uploadImage}
+                  accept='.jpg,.jpeg,.png,.svg'
+              />
                <Button
                   fontSize='12px'
                   type='submit'

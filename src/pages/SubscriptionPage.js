@@ -36,17 +36,90 @@ const SubscriptionPage = () => {
     }
   }, [state, refetch])
 
+  const toIpfsUrl = (url) => {
+    const urlToFile = new URL(url)
+    if (urlToFile.protocol === "ipfs:") {
+      return url
+    } else if (urlToFile.protocol === "https:") {
+      const pathComponents = urlToFile.pathname.split("/")
+      if (pathComponents.length > 0) {
+        return "ipfs://" + pathComponents[pathComponents.length - 1]
+      }
+    }
+    return null
+  }
+
+  const uploadFileToIPFSUsingNFTPort = (file) => {
+    if (file == null) {
+      return Promise.resolve(null)
+    }
+    const form = new FormData();
+    form.append('file', file);
+
+    const options = {
+      method: 'POST',
+      body: form,
+      headers: {
+        "Authorization": process.env.REACT_APP_NFT_PORT_API_KEY,
+      },
+    };
+
+    return fetch("https://api.nftport.xyz/v0/files", options)
+      .then(response => { return response.json() })
+      .then(json => { return toIpfsUrl(json["ipfs_url"]) }) // response contains https url to file from ipfs
+  }
+
+  const uploadMetadata = (name, description, fileUrl) => {
+    if (name == null || fileUrl == null) {
+      return Promise.resolve(null)
+    }
+    const jsonContent = {
+      name: name,
+      description: description || `Subscription to ${name}`,
+      file_url: fileUrl
+    }
+
+    console.log(jsonContent)
+
+    const options = {
+      method: 'POST',
+      body: JSON.stringify(jsonContent),
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": process.env.REACT_APP_NFT_PORT_API_KEY
+      }
+    };
+
+    return fetch("https://api.nftport.xyz/v0/metadata", options)
+      .then(response => { return response.json() })
+      .then(json => { return json["metadata_uri"] })
+      .catch(err => { console.error(err) })
+  }
+
   const hadnleSubFormSubmit = useCallback((values) => {
     const organizationId = ORG_ID
     const name = values.name
+    const description = values.description
     const payableToken = values.token
+    const nftImage = values.nftImage
     const amount = parseUnits(values.amount + '', 18)
     const period = +(values.period)
 
-    // show loader
-    console.log(values, 'organizationId, name, payableToken, amount, period', organizationId, name, payableToken, amount, period)
-    send(organizationId, name, payableToken, amount, period)
+    const uploadMetadataWithImageUrl = (imageUrl) => { return uploadMetadata(name, description, imageUrl) }
+
+    const sendSubscriptionToSmartContract = (metadataUri) => {
+      // show loader
+      console.log(metadataUri)
+      // TODO: pass URI to create product call
+      send(organizationId, name, payableToken, amount, period)
+    }
+
+    uploadFileToIPFSUsingNFTPort(nftImage)
+      .then(uploadMetadataWithImageUrl)
+      .then(sendSubscriptionToSmartContract)
+
     onClose()
+
   }, [onClose, send])
 
   // TODO: Add loader here
