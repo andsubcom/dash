@@ -1,12 +1,10 @@
 import React from 'react'
 import { Button, Box, Text } from "@chakra-ui/react"
-import { useEthers, useEtherBalance } from "@usedapp/core"
-import { formatEther } from "@ethersproject/units"
+import { useEthers } from "@usedapp/core"
 import Identicon from "./Identicon"
 
 export default function ConnectButton({ handleOpenModal, buttonOnly }) {
   const { activateBrowserWallet, account } = useEthers()
-  const etherBalance = useEtherBalance(account)
 
   function handleConnectWallet() {
     activateBrowserWallet()
@@ -56,11 +54,11 @@ export default function ConnectButton({ handleOpenModal, buttonOnly }) {
       boxShadow='0px 18px 32px rgba(208, 210, 218, 0.20)'
       py="0"
     >
-      <Box px="3">
+      {/* <Box px="3">
         <Text color="#15192C" fontSize="md">
           {etherBalance && parseFloat(formatEther(etherBalance)).toFixed(3)} ETH
         </Text>
-      </Box>
+      </Box> */}
       <Button
         onClick={handleOpenModal}
         bg="#eaecfc"
@@ -78,7 +76,7 @@ export default function ConnectButton({ handleOpenModal, buttonOnly }) {
       >
         <Text color="#15192C" fontSize="md" fontWeight="medium" mr="2">
           {account &&
-            `${account.slice(0, 6)}...${account.slice(
+            `${account.slice(0, 12)}...${account.slice(
               account.length - 4,
               account.length
             )}`}

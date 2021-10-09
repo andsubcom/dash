@@ -1,15 +1,13 @@
 import React, { useCallback, useEffect, useState } from 'react'
-import { Flex, Grid, Text, useDisclosure, Box, Stack, Heading, Button } from '@chakra-ui/react'
-import { prop } from 'styled-tools'
+import { Flex, useDisclosure, Box, Stack, Heading, Button } from '@chakra-ui/react'
 import { parseUnits, formatUnits } from '@ethersproject/units'
 
 import { PageWrapper, Sidebar } from 'modules/layout'
-import { Paper, User, Graph } from 'react-iconly'
 import { Card, Loader } from 'elements'
 import styled from '@emotion/styled'
 import { PageHeader, Table } from 'modules/admin'
 
-import { SubscriptionModal, useSubscriptionInfoByOrg, useCreateProduct } from 'modules/subscription'
+import { SubscriptionModal, WithdrawWidget, useSubscriptionInfoByOrg, useCreateProduct } from 'modules/subscription'
 
 import { TOKENS, SUBSCRIPTION_PERIODS } from 'utils/constants'
 
@@ -130,7 +128,13 @@ const SubscriptionPage = () => {
             </Stack>
           </Stack>
           <Card width='800px'>
-            <Table headers={subscriptionHeaders} items={subscriptions} />
+            <Table 
+              headers={subscriptionHeaders}
+              items={subscriptions} 
+              renderActions={(product) => {
+                return <WithdrawWidget product={product} />
+              }}
+            />
           </Card>
         </Box>
 

@@ -27,15 +27,15 @@ html, body {
 .chakra-ui-table thead tr {
   text-align: left;
 }
-/* .chakra-ui-table th {
-  padding: 1rem;
+.chakra-ui-table th {
+  padding: 0.7rem;
   text-align: left;
 }
 
 .chakra-ui-table td {
-  padding: 1rem;
+  padding: 0.7rem;
   text-align: left;
-} */
+}
 
 .footer-nav-item:after {
   content: "•";

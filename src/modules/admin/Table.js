@@ -1,12 +1,7 @@
 import React, { useState } from "react";
 import {
   Box,
-  Checkbox,
-  Menu,
-  MenuList,
-  MenuItem,
-  MenuButton,
-  IconButton
+  Checkbox
 } from "@chakra-ui/react";
 
 import { FaEllipsisV } from "react-icons/fa";
@@ -17,7 +12,8 @@ export default function Table({
   selected = [],
   selectable = false,
   bg = "secondary.card",
-  color = "gray.800"
+  color = "gray.800",
+  renderActions = () => {}
 }) {
   let itemsIds = items.map((item) => item.id);
   let [localSelected, setLocalSelected] = useState(selected);
@@ -78,16 +74,7 @@ export default function Table({
                 </td>
               ))}
               <td data-column="item-actions">
-                <Menu>
-                  <MenuButton
-                    as={IconButton}
-                    icon={<FaEllipsisV />}
-                  ></MenuButton>
-                  <MenuList>
-                    <MenuItem>Edit</MenuItem>
-                    <MenuItem>Delete</MenuItem>
-                  </MenuList>
-                </Menu>
+                { renderActions(item) }
               </td>
             </tr>
           ))}
