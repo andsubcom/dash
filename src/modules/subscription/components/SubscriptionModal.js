@@ -72,7 +72,7 @@ export default function SubscriptionModal({ isOpen, onClose, onSubmit }) {
         border='1px'
         borderStyle='solid'
         borderColor='whiteAlpha.700'
-        borderRadius='3xl'
+        borderRadius='4px'
       >
         <ModalHeader color='#15192C' px={4} fontSize='lg' fontWeight='medium'>
           Create Subscription
