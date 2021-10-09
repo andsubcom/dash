@@ -21,8 +21,7 @@ const PublicRoute = ({ component: Component, layout: Layout, path, ...rest }) =>
   )
 }
 
-const Routes = ({
-}) => {
+const Routes = () => {
   return (
     <Switch>
       <PublicRoute exact path={'/'} component={AdminPage} layout={AdminLayout} />

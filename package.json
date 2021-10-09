@@ -25,7 +25,6 @@
     "axios": "^0.21.4",
     "bignumber.js": "^9.0.1",
     "cross-env": "^7.0.3",
-    "defi-sdk": "^0.1.0-alpha.25",
     "ethers": "^5.4.2",
     "formik": "^2.2.9",
     "framer-motion": "^4.1.17",

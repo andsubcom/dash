@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import {
   Button,
   Flex,
@@ -170,58 +170,3 @@ export default function SubscriptionModal({ isOpen, onClose, onSubmit }) {
     </Modal>
   )
 }
-
-// function InviteFormSingle ({ values, isLoading, isInvited, isDisabled, onInvite }) {
-//   const [name, value] = Object.entries(values)[0]
-//   const [isSubmitting, setIsSubmitting] = useState(false)
-
-//   const formik = useFormik({
-//     initialValues: { [name]: '' },
-//     validationSchema: Yup.object({
-//       [name]: Yup.string()
-//         .email('Please enter valid email address.')
-//         .required('Please enter your email address')
-//     }),
-//     onSubmit: values => {
-//       setIsSubmitting(true)
-//       onInvite(name, values[name])
-//     }
-//   })
-
-//   return (
-//     <>
-//       <form onSubmit={formik.handleSubmit}>
-//         <FormControl width='100%' isInvalid={formik.errors[name] && formik.touched[name]}>
-//           <FormLabel htmlFor={name}>Email</FormLabel>
-//           <TextInput
-//             focusBorderColor='primary'
-//             size='sm'
-//             rounded='4px'
-//             name={name}
-//             id={name}
-//             value={formik.values[name]}
-//             onChange={formik.handleChange}
-//             isDisabled={(isSubmitting && isLoading) || isInvited || isDisabled}
-//             isReadOnly={isInvited}
-//             placeholder={t('inviteModal.Enter email address')} />
-//           <FormErrorMessage mb='1'>{formik.errors[name]}</FormErrorMessage>
-//         </FormControl>
-
-//         <Box textAlign='center' width='100%' mt='6'>
-//           <Button
-//             type='submit'
-//             size="md"
-//             variantColor="primary"
-//             minWidth="136px"
-//             minHeight="38px"
-//             borderRadius="8px"
-//             fontWeight="medium"
-//             isDisabled={isDisabled}
-//             isLoading={isSubmitting && isLoading}>
-//             {t('Invite')}
-//           </Button>
-//         </Box>
-//       </form>
-//     </>
-//   )
-// }

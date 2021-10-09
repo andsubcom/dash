@@ -1,14 +1,13 @@
 import React, { useCallback, useEffect, useState } from 'react'
-import PropTypes from 'prop-types'
 import { Flex, Grid, Text, useDisclosure, Box, Stack, Heading, Button } from '@chakra-ui/react'
 import { prop } from 'styled-tools'
 import { parseUnits, formatUnits } from '@ethersproject/units'
 
-import { Header, PageWrapper, Sidebar } from 'modules/layout'
+import { PageWrapper, Sidebar } from 'modules/layout'
 import { Paper, User, Graph } from 'react-iconly'
 import { Card, Loader } from 'elements'
 import styled from '@emotion/styled'
-import { PageHeader, PageContent, Table } from 'modules/admin'
+import { PageHeader, Table } from 'modules/admin'
 
 import { SubscriptionModal, useSubscriptionInfoByOrg, useCreateProduct } from 'modules/subscription'
 
@@ -21,8 +20,6 @@ const AdminPage = () => {
   const { state, send } = useCreateProduct()
 
   const { isOpen, onOpen, onClose } = useDisclosure()
-  // const result = useGetSubscriptions(0)
-  // const result1 = useSubscriptionInfo(0)
   const { products, refetch } = useSubscriptionInfoByOrg(ORG_ID)
 
   useEffect(() => {
@@ -39,7 +36,7 @@ const AdminPage = () => {
         setIsMining(false)
         break
     }
-  }, [state])
+  }, [state, refetch])
 
   const hadnleSubFormSubmit = useCallback((values) => {
     const organizationId = ORG_ID

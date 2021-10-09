@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled from '@emotion/styled'
 
-import { useDisclosure, Flex, Box, Image, Heading, Text } from '@chakra-ui/react'
+import { useDisclosure, Flex, Text } from '@chakra-ui/react'
 import { ConnectButton, AccountModal } from 'modules/wallet'
 
 function PageHeader({ title, subtitle, ...props }) {
