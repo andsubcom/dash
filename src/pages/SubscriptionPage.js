@@ -29,7 +29,7 @@ const SubscriptionPage = () => {
         refetch()
         setIsMining(false)
         break
-    
+
       default:
         setIsMining(false)
         break
@@ -129,7 +129,8 @@ const SubscriptionPage = () => {
   // if(!products) { return <></> }
 
   const subscriptions = products.map((product, i) => {
-    const token = Object.keys(TOKENS).map(key => TOKENS[key]).find(token => token.address === product.payableToken)
+    const token = Object.keys(TOKENS).map(key => TOKENS[key])
+      .find(token => token.address.toUpperCase() === product.payableToken.toUpperCase())
     return {
       id: i,
       name: `Subscription ${i}`,
@@ -168,10 +169,10 @@ const SubscriptionPage = () => {
   ]
 
   const renderSubButton = () => {
-    if(isMining) {
+    if (isMining) {
       return (<Button
         key="0"
-        onClick={() => {}}
+        onClick={() => { }}
         disabled
         colorScheme="main"
         size="sm"
@@ -200,13 +201,13 @@ const SubscriptionPage = () => {
           <Stack direction="row" alignItems="top" marginBottom="1.5rem">
             <Heading size="md">Manage products</Heading>
             <Stack direction={["column", "row"]} style={{ marginLeft: "auto" }}>
-              { renderSubButton() }
+              {renderSubButton()}
             </Stack>
           </Stack>
           <Card width='800px'>
-            <Table 
+            <Table
               headers={subscriptionHeaders}
-              items={subscriptions} 
+              items={subscriptions}
               renderActions={(product) => {
                 return <WithdrawWidget product={product} />
               }}
