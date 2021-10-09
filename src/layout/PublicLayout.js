@@ -6,7 +6,7 @@ import { useEthers } from "@usedapp/core"
 
 function PublicLayout({ children }) {
   const { account } = useEthers()
-  console.log('account', account)
+
   if(account) {
     return <Redirect to='/' />
   }

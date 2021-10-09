@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import {
   Box,
-  Checkbox
+  Checkbox,
+  Link
 } from "@chakra-ui/react";
 
 import { FaEllipsisV } from "react-icons/fa";
@@ -22,13 +23,22 @@ export default function Table({
     if (isChecked === true) {
       setLocalSelected(itemsIds);
     }
-  };
+  }
 
   const setCheckedItem = (item, isChecked) => {
     isChecked
       ? setLocalSelected([...localSelected, item])
       : setLocalSelected(localSelected.filter((i) => i !== item));
-  };
+  }
+
+  const renderCell = (item, c) => {
+    if(headers[c].id === 'token') {
+      return <Link color={'pink.600'} href='/' target='_blank'>{item[headers[c].id]}</Link>
+    } else {
+      return item[headers[c].id]
+    }
+  }
+
   return (
     <Box width="100%" bg={bg} color={color} rounded="lg" p={5}>
       <table className="chakra-ui-table">
@@ -70,7 +80,7 @@ export default function Table({
 
               {Object.keys(item).map((column, c) => (
                 <td key={c} data-column={headers[c]}>
-                  {item[headers[c].id]}
+                  {renderCell(item, c)}
                 </td>
               ))}
               <td data-column="item-actions">

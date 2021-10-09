@@ -4,9 +4,9 @@ import { Redirect } from 'react-router-dom'
 
 import { useEthers } from "@usedapp/core"
 
-function ADminLayout({ children }) {
+function AdminLayout({ children }) {
   const { account } = useEthers()
-  console.log('account', account)
+
   if(!account) {
     return <Redirect to='/login' />
   }
@@ -18,9 +18,9 @@ function ADminLayout({ children }) {
   )
 }
 
-ADminLayout.propTypes = {
+AdminLayout.propTypes = {
   children: PropTypes.node.isRequired
 }
 
-export default ADminLayout
+export default AdminLayout
 
