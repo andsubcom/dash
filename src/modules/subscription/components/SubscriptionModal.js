@@ -19,7 +19,7 @@ import * as Yup from 'yup'
 import { TOKENS, SUBSCRIPTION_PERIODS } from 'utils/constants'
 
 const FormInput = ({...props}) => (<Input
-  borderRadius="15px"
+  borderRadius="4px"
   mb="24px"
   fontSize="sm"
   type="text"
@@ -29,7 +29,7 @@ const FormInput = ({...props}) => (<Input
   />)
 
 const FormSelect = ({children,...props}) => (<Select
-  borderRadius="15px"
+  borderRadius="4px"
   mb="24px"
   fontSize="sm"
   type="number"
