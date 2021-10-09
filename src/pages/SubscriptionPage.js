@@ -135,7 +135,7 @@ const SubscriptionPage = () => {
       id: i,
       name: `Subscription ${i}`,
       amount: formatUnits(product.amount, token.decimals),
-      token: token.symbol,
+      token: token,
       period: SUBSCRIPTION_PERIODS[product.period.toNumber()],
       subscribers: 15
     }
@@ -152,7 +152,7 @@ const SubscriptionPage = () => {
     },
     {
       id: "amount",
-      title: "Amount",
+      title: "Price",
     },
     {
       id: "token",

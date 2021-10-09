@@ -107,7 +107,7 @@ export default function SubscriptionModal({ isOpen, onClose, onSubmit }) {
                   id={'name'}
                   value={formik.values['name']}
                   onChange={formik.handleChange}
-                  placeholder='Name' />
+                  placeholder='Enter name' />
               </FormControl>
               <FormControl isInvalid={formik.errors['description'] && formik.touched['description']}>
                 <FormLabel ms="4px" fontSize="sm" fontWeight="normal">
@@ -118,11 +118,11 @@ export default function SubscriptionModal({ isOpen, onClose, onSubmit }) {
                     id={'description'}
                     value={formik.values['description']}
                     onChange={formik.handleChange}
-                    placeholder='Description' />
+                    placeholder='Enter optional NFT description' />
               </FormControl>
               <FormControl isInvalid={formik.errors['amount'] && formik.touched['amount']}>
                 <FormLabel ms='4px' fontSize='sm' fontWeight='normal'>
-                  Amount
+                  Price
                 </FormLabel>
                 <FormInput
                   name={'amount'}
@@ -130,7 +130,7 @@ export default function SubscriptionModal({ isOpen, onClose, onSubmit }) {
                   type='number'
                   value={formik.values['amount']}
                   onChange={formik.handleChange}
-                  placeholder='Amount' />
+                  placeholder='Enter price per period' />
               </FormControl>
               <FormControl isInvalid={formik.errors['period'] && formik.touched['period']}>
                 <FormLabel ms='4px' fontSize='sm' fontWeight='normal'>
@@ -141,7 +141,7 @@ export default function SubscriptionModal({ isOpen, onClose, onSubmit }) {
                   id={'period'}
                   value={formik.values['period']}
                   onChange={formik.handleChange}
-                  placeholder='Period' >
+                  placeholder='Select period' >
                   { 
                     Object.keys(SUBSCRIPTION_PERIODS).map((key) => {
                       return <option value={key}>{SUBSCRIPTION_PERIODS[key]}</option>
@@ -158,10 +158,10 @@ export default function SubscriptionModal({ isOpen, onClose, onSubmit }) {
                   id={'token'}
                   value={formik.values['token']}
                   onChange={formik.handleChange}
-                  placeholder='Token' >
+                  placeholder='Select token' >
                   {
                     Object.keys(TOKENS).map((key) => {
-                      return <option value={TOKENS[key].address}>{TOKENS[key].symbol}</option>
+                      return <option value={TOKENS[key].address}>{`${TOKENS[key].name} (${TOKENS[key].symbol})`}</option>
                     }) 
                   }
                 </FormSelect>
