@@ -6,11 +6,7 @@ import {
   MenuList,
   MenuItem,
   MenuButton,
-  IconButton,
-  Button,
-  Stack,
-  Heading,
-  Select
+  IconButton
 } from "@chakra-ui/react";
 
 import { FaEllipsisV } from "react-icons/fa";

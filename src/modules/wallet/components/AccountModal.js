@@ -8,7 +8,6 @@ import {
   ModalOverlay,
   ModalContent,
   ModalHeader,
-  ModalFooter,
   ModalBody,
   ModalCloseButton,
   Text,
@@ -17,21 +16,8 @@ import { ExternalLinkIcon, CopyIcon } from '@chakra-ui/icons'
 import { useEthers } from '@usedapp/core'
 import Identicon from './Identicon'
 
-import { Asset } from 'modules/wallet'
-import { useAddressAssets } from 'defi-sdk'
-
 export default function AccountModal({ isOpen, onClose }) {
   const { account, deactivate } = useEthers()
-
-  const assets = useAddressAssets(
-    {
-      currency: 'USD',
-      address: account || '',
-    },
-    {
-      enabled: Boolean(account),
-    },
-  )
 
   function handleDeactivateAccount() {
     deactivate()
