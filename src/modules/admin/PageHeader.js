@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from '@emotion/styled'
+import { prop } from 'styled-tools'
 
 import { useDisclosure, Flex, Text } from '@chakra-ui/react'
 import { ConnectButton, AccountModal } from 'modules/wallet'
@@ -37,14 +38,14 @@ const PageTitle = styled(Text)`
   font-size: 40px;
   line-height: 47px;
   letter-spacing: -0.02em;
-  color: #15192C;
+  color: ${prop('theme.colors.font.primary')};
 `
 
 const PageSubtitle = styled(Text)`
   font-weight: 500;
   font-size: 18px;
   line-height: 21px;
-  color: #92959E;
+  color: ${prop('theme.colors.font.secondary')};
   margin-top: 6px;
   margin-left: 1px;
 `

@@ -21,12 +21,14 @@ export default extendTheme({
       800: '#00244f',
       900: '#000f1f',
     },
-    secondary: {
-      background: "#FBF7EF",
-      link: "#4A5568",
-      card: "#ffffff",
-      inputHelper: "#CBD5E0"
+    font: {
+      primary: '#15192C',
+      secondary: '#92959E',
+      disabled: '#a8aab2',
     },
+    primary: '#1e45fd',
+    background: '#f8f9fc',
+    backgroundLight: '#fff',
     navItem: {
       50: "#F7FAFC",
       100: "#EDF2F7",
