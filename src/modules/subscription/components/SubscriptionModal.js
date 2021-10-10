@@ -49,10 +49,10 @@ export default function SubscriptionModal({ isOpen, onClose, onSubmit }) {
       'description': Yup.string(),
       'amount': Yup.string()
         .required('Required filed'),
-      'period': Yup.string()
-        .required('Required filed'),
-      'token': Yup.string()
-        .required('Required filed'),
+      // 'period': Yup.string()
+      //   .required('Required filed'),
+      // 'token': Yup.string()
+      //   .required('Required filed'),
     }),
     onSubmit: (values, { resetForm }) => {
       onSubmit(values)

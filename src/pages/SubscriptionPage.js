@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import { Flex, useDisclosure, Box, Stack, Heading, Button } from '@chakra-ui/react'
 import { parseUnits, formatUnits } from '@ethersproject/units'
+import { useEthers } from '@usedapp/core'
 
 import { PageWrapper, Sidebar } from 'modules/layout'
 import { Card, Loader } from 'elements'
@@ -11,14 +12,15 @@ import { SubscriptionModal, WithdrawWidget, useSubscriptionInfoByOrg, useCreateP
 
 import { TOKENS, SUBSCRIPTION_PERIODS } from 'utils/constants'
 
-const ORG_ID = 0
-
 const SubscriptionPage = () => {
+  const { account } = useEthers()
   const [isMining, setIsMining] = useState(false)
   const { state, send } = useCreateProduct()
 
   const { isOpen, onOpen, onClose } = useDisclosure()
-  const { products, refetch } = useSubscriptionInfoByOrg(ORG_ID)
+  const { products, refetch } = useSubscriptionInfoByOrg(account)
+
+  console.log('products', products)
 
   useEffect(() => {
     switch (state.status) {
@@ -95,8 +97,7 @@ const SubscriptionPage = () => {
       .then(json => { return json["metadata_uri"] })
   }
 
-  const hadnleSubFormSubmit = useCallback((values) => {
-    const organizationId = ORG_ID
+  const hadnleSubFormSubmit = (values) => {
     const name = values.name
     const description = values.description
     const payableToken = values.token
@@ -113,7 +114,7 @@ const SubscriptionPage = () => {
       }
       console.log(metadataUri)
       // TODO: pass URI to create product call
-      send(organizationId, name, payableToken, amount, period)
+      send(account, name, payableToken, amount, period)
     }
 
     uploadFileToIPFSUsingNFTPort(nftImage)
@@ -123,7 +124,7 @@ const SubscriptionPage = () => {
 
     onClose()
 
-  }, [onClose, send])
+  }
 
   // TODO: Add loader here
   // if(!products) { return <></> }
