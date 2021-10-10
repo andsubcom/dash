@@ -21,6 +21,7 @@ const SubscriptionPage = () => {
   const { products, refetch } = useSubscriptionInfoByOrg(account)
 
   console.log('products', products)
+  console.log('state', state)
 
   useEffect(() => {
     switch (state.status) {
@@ -98,6 +99,7 @@ const SubscriptionPage = () => {
   }
 
   const hadnleSubFormSubmit = (values) => {
+    const id = values.id
     const name = values.name
     const description = values.description
     const payableToken = values.token
@@ -112,15 +114,15 @@ const SubscriptionPage = () => {
         // TODO: notify user about image loading failure
         return
       }
-      console.log(metadataUri)
+      console.log('metadataUri', metadataUri)
       // TODO: pass URI to create product call
-      send(account, name, payableToken, amount, period)
+      send(id, name, payableToken, amount, period, metadataUri || '')
     }
 
     uploadFileToIPFSUsingNFTPort(nftImage)
       .then(uploadMetadataWithImageUrl)
       .then(sendSubscriptionToSmartContract)
-      .catch(err => { console.error(err) })
+      .catch(err => { console.log('transaction error --->', err) })
 
     onClose()
 

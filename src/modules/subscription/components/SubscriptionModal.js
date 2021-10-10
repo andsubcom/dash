@@ -44,15 +44,17 @@ export default function SubscriptionModal({ isOpen, onClose, onSubmit }) {
   const formik = useFormik({
     initialValues: {},
     validationSchema: Yup.object({
+      'id': Yup.string()
+        .required('Required filed'),
       'name': Yup.string()
         .required('Required filed'),
       'description': Yup.string(),
       'amount': Yup.string()
         .required('Required filed'),
-      // 'period': Yup.string()
-      //   .required('Required filed'),
-      // 'token': Yup.string()
-      //   .required('Required filed'),
+      'period': Yup.string()
+        .required('Required filed'),
+      'token': Yup.string()
+        .required('Required filed'),
     }),
     onSubmit: (values, { resetForm }) => {
       onSubmit(values)
@@ -98,6 +100,17 @@ export default function SubscriptionModal({ isOpen, onClose, onSubmit }) {
           p="12px"
         >
             <form onSubmit={formik.handleSubmit}>
+              <FormControl isInvalid={formik.errors['id'] && formik.touched['id']}>
+                <FormLabel ms="4px" fontSize="sm" fontWeight="normal">
+                  ID
+                </FormLabel>
+                <FormInput
+                  name={'id'}
+                  id={'id'}
+                  value={formik.values['id']}
+                  onChange={formik.handleChange}
+                  placeholder='ansub_pro_monthly' />
+              </FormControl>
               <FormControl isInvalid={formik.errors['name'] && formik.touched['name']}>
                 <FormLabel ms="4px" fontSize="sm" fontWeight="normal">
                   Name

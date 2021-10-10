@@ -6,7 +6,7 @@ import SUBSCRIPTION_HUB_ABI from 'assets/abi/SubscriptionsHub.json'
 
 
 // const ANDSUB_HUB_ADDRESS = process.env.REACT_APP_SUBSCRIPTION_HUB_ADDRESS
-const ANDSUB_HUB_ADDRESS = '0x369aD4f88D50Fe80Fb07FeE20101510A16423F90'
+const ANDSUB_HUB_ADDRESS = '0xBc72482Ac128227BBB18E305841c51120503337d'
 
 export const fetchProductInfo = async function (provider, productId) {
   const contract = new Contract(ANDSUB_HUB_ADDRESS, SUBSCRIPTION_HUB_ABI, provider)
@@ -84,5 +84,5 @@ export const useSubscriptionInfoByOrg = (account) => {
 export const useCreateProduct = function() {
   const abi = new Interface(SUBSCRIPTION_HUB_ABI)
   const contract = new Contract(ANDSUB_HUB_ADDRESS, abi)
-  return useContractFunction(contract, 'createSubscription', { transactionName: 'Create Subscription'})
+  return useContractFunction(contract, 'createProduct', { transactionName: 'Create Product'})
 }
