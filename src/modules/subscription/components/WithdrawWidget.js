@@ -1,14 +1,34 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Button } from '@chakra-ui/react'
 import { Loader } from 'elements'
+
+import { useWithdrawPaymentForProduct } from 'modules/subscription'
 
 
 function WithdrawWidget({product}) {
   const [isMining, setIsMining] = useState(false)
+  const { state, send } = useWithdrawPaymentForProduct(product.id)
+
+  console.log('product ----->', product, state, send)
 
   const handleWithdraw = () => {
     setIsMining(true)
+    send(product.id)
   }
+
+  useEffect(() => {
+    switch (state.status) {
+      case 'Mining':
+        setIsMining(true)
+        break
+      case 'Success':
+        setIsMining(false)
+        break
+      default:
+        setIsMining(false)
+        break
+    }
+  }, [state])
 
   const renderButton = () => {
     if(isMining) {

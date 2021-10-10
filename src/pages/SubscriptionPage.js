@@ -135,8 +135,8 @@ const SubscriptionPage = () => {
     const token = Object.keys(TOKENS).map(key => TOKENS[key])
       .find(token => token.address.toUpperCase() === product.payableToken.toUpperCase())
     return {
-      id: i,
-      name: `Subscription ${i}`,
+      id: product.id,
+      name: product.name,
       amount: formatUnits(product.amount, token.decimals),
       token: token,
       period: SUBSCRIPTION_PERIODS[product.period.toNumber()],
