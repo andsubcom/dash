@@ -1,14 +1,39 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Button } from '@chakra-ui/react'
 import { Loader } from 'elements'
+import toast from 'react-hot-toast'
 
+import { useWithdrawPaymentForProduct } from 'modules/subscription'
 
 function WithdrawWidget({product}) {
   const [isMining, setIsMining] = useState(false)
+  const { state, send } = useWithdrawPaymentForProduct(product.id)
 
   const handleWithdraw = () => {
-    setIsMining(true)
+    send(product.id)
   }
+
+  console.log('state', state)
+
+  useEffect(() => {
+    switch (state.status) {
+      case 'Mining':
+        if(!isMining) { toast.success('Transaction has been sent') }
+        setIsMining(true)
+        break
+      case 'Success':
+        if(isMining) { toast.success('Successfully withdraw money') }
+        setIsMining(false)
+        break
+      case 'Exception':
+        toast.error(state.errorMessage)
+        setIsMining(false)
+        break
+      default:
+        setIsMining(false)
+        break
+    }
+  }, [state])
 
   const renderButton = () => {
     if(isMining) {

@@ -5,17 +5,18 @@ import { Interface } from '@ethersproject/abi'
 import SUBSCRIPTION_HUB_ABI from 'assets/abi/SubscriptionsHub.json'
 
 
-const ANDSUB_HUB_ADDRESS = `0xF61C6cD6FEa4E407651d94837816aD0f8be350E5`
+const ANDSUB_HUB_ADDRESS = process.env.REACT_APP_SUBSCRIPTION_HUB_ADDRESS
 
-export const fetchSubscriptionInfo = async function (provider, productId) {
+
+export const fetchProductInfo = async function (provider, productId) {
   const contract = new Contract(ANDSUB_HUB_ADDRESS, SUBSCRIPTION_HUB_ABI, provider)
-  return await contract.getSubscriptionInfo(productId)
+  return await contract.getProductInfo(productId)
 }
 
-export const fetchSubscriptionsForOrganization = async function (provider, organizationId) {
+export const fetchOwnerProducts = async function (provider, account) {
   const contract = new Contract(ANDSUB_HUB_ADDRESS, SUBSCRIPTION_HUB_ABI, provider)
-  const productIds = await contract.getAllsubscriptionsForOrganization(organizationId)
-  const requests = productIds.map((productId) => contract.getSubscriptionInfo(productId))
+  const productIds = await contract.getOwnerProductIds(account)
+  const requests = productIds.map((productId) => contract.getProductInfo(productId))
   return await Promise.all(requests)
 }
 
@@ -56,16 +57,16 @@ export const useGetSubscriptions = (organizationId) => {
   return result
 }
 
-export const useSubscriptionInfoByOrg = (organizationId = 0) => {
+export const useSubscriptionInfoByOrg = (account) => {
   const { library } = useEthers()
   const [products, setProducts] = useState([])
 
   const fetch = useCallback(
     async () => {
-      const products = await fetchSubscriptionsForOrganization(library, organizationId)
+      const products = await fetchOwnerProducts(library, account)
       setProducts(products)
     },
-    [library, organizationId],
+    [library, account],
   )
 
   useEffect(() => {
@@ -83,5 +84,11 @@ export const useSubscriptionInfoByOrg = (organizationId = 0) => {
 export const useCreateProduct = function() {
   const abi = new Interface(SUBSCRIPTION_HUB_ABI)
   const contract = new Contract(ANDSUB_HUB_ADDRESS, abi)
-  return useContractFunction(contract, 'createSubscription', { transactionName: 'Create Subscription'})
+  return useContractFunction(contract, 'createProduct', { transactionName: 'Create Product'})
+}
+
+export const useWithdrawPaymentForProduct = function() {
+  const abi = new Interface(SUBSCRIPTION_HUB_ABI)
+  const contract = new Contract(ANDSUB_HUB_ADDRESS, abi)
+  return useContractFunction(contract, 'withdrawPaymentForProduct', { transactionName: 'Withdraw Payment'})
 }

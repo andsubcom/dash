@@ -34,8 +34,10 @@ export default function Table({
   const renderCell = (item, c) => {
     if (headers[c].id === 'token') {
       return <Link color={'pink.600'} href={`https://ropsten.etherscan.io/address/${item[headers[c].id].address}`} target='_blank'>{item[headers[c].id].name}</Link>
-    } if (headers[c].id === 'amount') {
+    } else if (headers[c].id === 'amount') {
       return `${item[headers[c].id]} ${item['token'].symbol}`
+    } else if (headers[c].id === 'id') {
+      return <Link color={'pink.600'} href={`https://checkout.andsub.com/${item[headers[c].id]}`} target='_blank'>{item[headers[c].id]}</Link>
     } else {
       return item[headers[c].id]
     }

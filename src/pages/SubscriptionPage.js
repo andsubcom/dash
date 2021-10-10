@@ -1,6 +1,8 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Flex, useDisclosure, Box, Stack, Heading, Button } from '@chakra-ui/react'
 import { parseUnits, formatUnits } from '@ethersproject/units'
+import { useEthers } from '@usedapp/core'
+import toast from 'react-hot-toast'
 
 import { PageWrapper, Sidebar } from 'modules/layout'
 import { Card, Loader } from 'elements'
@@ -11,22 +13,27 @@ import { SubscriptionModal, WithdrawWidget, useSubscriptionInfoByOrg, useCreateP
 
 import { TOKENS, SUBSCRIPTION_PERIODS } from 'utils/constants'
 
-const ORG_ID = 0
-
 const SubscriptionPage = () => {
+  const { account } = useEthers()
   const [isMining, setIsMining] = useState(false)
   const { state, send } = useCreateProduct()
 
   const { isOpen, onOpen, onClose } = useDisclosure()
-  const { products, refetch } = useSubscriptionInfoByOrg(ORG_ID)
+  const { products, refetch } = useSubscriptionInfoByOrg(account)
 
   useEffect(() => {
     switch (state.status) {
       case 'Mining':
+        if(!isMining) { toast.success('Transaction has been sent') }
         setIsMining(true)
         break
       case 'Success':
         refetch()
+        if(isMining) { toast.success('Product created') }
+        setIsMining(false)
+        break
+      case 'Exception':
+        toast.error(state.errorMessage)
         setIsMining(false)
         break
 
@@ -34,7 +41,7 @@ const SubscriptionPage = () => {
         setIsMining(false)
         break
     }
-  }, [state, refetch])
+  }, [state, refetch, toast])
 
   const toIpfsUrl = (url) => {
     const urlToFile = new URL(url)
@@ -95,8 +102,8 @@ const SubscriptionPage = () => {
       .then(json => { return json["metadata_uri"] })
   }
 
-  const hadnleSubFormSubmit = useCallback((values) => {
-    const organizationId = ORG_ID
+  const hadnleSubFormSubmit = (values) => {
+    const id = values.id
     const name = values.name
     const description = values.description
     const payableToken = values.token
@@ -111,19 +118,19 @@ const SubscriptionPage = () => {
         // TODO: notify user about image loading failure
         return
       }
-      console.log(metadataUri)
+      console.log('metadataUri', metadataUri)
       // TODO: pass URI to create product call
-      send(organizationId, name, payableToken, amount, period)
+      send(id, name, payableToken, amount, period, metadataUri || '')
     }
 
     uploadFileToIPFSUsingNFTPort(nftImage)
       .then(uploadMetadataWithImageUrl)
       .then(sendSubscriptionToSmartContract)
-      .catch(err => { console.error(err) })
+      .catch(err => { console.log('transaction error --->', err) })
 
     onClose()
 
-  }, [onClose, send])
+  }
 
   // TODO: Add loader here
   // if(!products) { return <></> }
@@ -132,8 +139,8 @@ const SubscriptionPage = () => {
     const token = Object.keys(TOKENS).map(key => TOKENS[key])
       .find(token => token.address.toUpperCase() === product.payableToken.toUpperCase())
     return {
-      id: i,
-      name: `Subscription ${i}`,
+      id: product.id,
+      name: product.name,
       amount: formatUnits(product.amount, token.decimals),
       token: token,
       period: SUBSCRIPTION_PERIODS[product.period.toNumber()],

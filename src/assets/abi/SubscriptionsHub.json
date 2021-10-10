@@ -9,31 +9,6 @@
     "inputs": [
       {
         "indexed": true,
-        "internalType": "uint256",
-        "name": "organizationId",
-        "type": "uint256"
-      },
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "owner",
-        "type": "address"
-      },
-      {
-        "indexed": false,
-        "internalType": "string",
-        "name": "name",
-        "type": "string"
-      }
-    ],
-    "name": "OrganizationCreated",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": true,
         "internalType": "address",
         "name": "previousOwner",
         "type": "address"
@@ -53,15 +28,15 @@
     "inputs": [
       {
         "indexed": true,
-        "internalType": "uint256",
-        "name": "organizationId",
-        "type": "uint256"
+        "internalType": "address",
+        "name": "owner",
+        "type": "address"
       },
       {
         "indexed": true,
-        "internalType": "uint256",
-        "name": "subscriptionId",
-        "type": "uint256"
+        "internalType": "string",
+        "name": "productId",
+        "type": "string"
       },
       {
         "indexed": true,
@@ -86,61 +61,16 @@
         "internalType": "string",
         "name": "name",
         "type": "string"
+      },
+      {
+        "indexed": false,
+        "internalType": "string",
+        "name": "uri",
+        "type": "string"
       }
     ],
-    "name": "SubscriptionCreated",
+    "name": "ProductCreated",
     "type": "event"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "subscriptionId",
-        "type": "uint256"
-      },
-      {
-        "internalType": "bool",
-        "name": "allowAutoExtend",
-        "type": "bool"
-      }
-    ],
-    "name": "buySubscription",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "subscriptionId",
-        "type": "uint256"
-      },
-      {
-        "internalType": "bool",
-        "name": "allowAutoExtend",
-        "type": "bool"
-      },
-      {
-        "internalType": "address",
-        "name": "token",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "amountInMax",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "deadline",
-        "type": "uint256"
-      }
-    ],
-    "name": "buySubscriptionByAnyToken",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
   },
   {
     "inputs": [
@@ -150,9 +80,9 @@
         "type": "address"
       },
       {
-        "internalType": "uint256",
-        "name": "subscriptionId",
-        "type": "uint256"
+        "internalType": "string",
+        "name": "productId",
+        "type": "string"
       }
     ],
     "name": "checkUserHasActiveSubscription",
@@ -170,21 +100,8 @@
     "inputs": [
       {
         "internalType": "string",
-        "name": "name",
+        "name": "productId",
         "type": "string"
-      }
-    ],
-    "name": "createOrganization",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "organizationId",
-        "type": "uint256"
       },
       {
         "internalType": "string",
@@ -205,22 +122,14 @@
         "internalType": "uint256",
         "name": "period",
         "type": "uint256"
-      }
-    ],
-    "name": "createSubscription",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
+      },
       {
-        "internalType": "uint256",
-        "name": "tokenId",
-        "type": "uint256"
+        "internalType": "string",
+        "name": "uri",
+        "type": "string"
       }
     ],
-    "name": "extendSubscription",
+    "name": "createProduct",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -256,17 +165,17 @@
   {
     "inputs": [
       {
-        "internalType": "uint256",
-        "name": "organizationId",
-        "type": "uint256"
+        "internalType": "address",
+        "name": "owner",
+        "type": "address"
       }
     ],
-    "name": "getAllsubscriptionsForOrganization",
+    "name": "getOwnerProductIds",
     "outputs": [
       {
-        "internalType": "uint256[]",
+        "internalType": "string[]",
         "name": "",
-        "type": "uint256[]"
+        "type": "string[]"
       }
     ],
     "stateMutability": "view",
@@ -275,56 +184,23 @@
   {
     "inputs": [
       {
-        "internalType": "uint256",
-        "name": "organizationId",
-        "type": "uint256"
+        "internalType": "string",
+        "name": "productId",
+        "type": "string"
       }
     ],
-    "name": "getOrganizationInfo",
+    "name": "getProductInfo",
     "outputs": [
       {
-        "internalType": "address",
-        "name": "owner",
-        "type": "address"
+        "internalType": "string",
+        "name": "id",
+        "type": "string"
       },
       {
         "internalType": "string",
         "name": "name",
         "type": "string"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "owner",
-        "type": "address"
-      }
-    ],
-    "name": "getOwnerOrganizationIds",
-    "outputs": [
-      {
-        "internalType": "uint256[]",
-        "name": "",
-        "type": "uint256[]"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "subscriptionId",
-        "type": "uint256"
-      }
-    ],
-    "name": "getSubscriptionInfo",
-    "outputs": [
+      },
       {
         "internalType": "uint256",
         "name": "amount",
@@ -341,9 +217,14 @@
         "type": "uint256"
       },
       {
-        "internalType": "uint256",
-        "name": "organizationId",
-        "type": "uint256"
+        "internalType": "address",
+        "name": "owner__",
+        "type": "address"
+      },
+      {
+        "internalType": "string",
+        "name": "uri",
+        "type": "string"
       }
     ],
     "stateMutability": "view",
@@ -354,7 +235,7 @@
     "name": "nft",
     "outputs": [
       {
-        "internalType": "contract SubscriptionTicketNFT",
+        "internalType": "contract SubscriptionNFT",
         "name": "",
         "type": "address"
       }
@@ -398,12 +279,102 @@
   {
     "inputs": [
       {
+        "internalType": "string",
+        "name": "productId",
+        "type": "string"
+      },
+      {
+        "internalType": "bool",
+        "name": "allowAutoExtend",
+        "type": "bool"
+      }
+    ],
+    "name": "subscribe",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "string",
+        "name": "productId",
+        "type": "string"
+      },
+      {
+        "internalType": "bool",
+        "name": "allowAutoExtend",
+        "type": "bool"
+      },
+      {
+        "internalType": "address",
+        "name": "token",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "amountInMax",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "deadline",
+        "type": "uint256"
+      }
+    ],
+    "name": "subscribeByAnyToken",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
         "internalType": "address",
         "name": "newOwner",
         "type": "address"
       }
     ],
     "name": "transferOwnership",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "string",
+        "name": "productId",
+        "type": "string"
+      }
+    ],
+    "name": "withdrawPaymentForProduct",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "tokenId",
+        "type": "uint256"
+      }
+    ],
+    "name": "withdrawPaymentForToken",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256[]",
+        "name": "tokenIds",
+        "type": "uint256[]"
+      }
+    ],
+    "name": "withdrawPaymentForTokens",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
