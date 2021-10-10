@@ -1,7 +1,8 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Flex, useDisclosure, Box, Stack, Heading, Button } from '@chakra-ui/react'
 import { parseUnits, formatUnits } from '@ethersproject/units'
 import { useEthers } from '@usedapp/core'
+import toast from 'react-hot-toast'
 
 import { PageWrapper, Sidebar } from 'modules/layout'
 import { Card, Loader } from 'elements'
@@ -20,16 +21,19 @@ const SubscriptionPage = () => {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const { products, refetch } = useSubscriptionInfoByOrg(account)
 
-  console.log('products', products)
-  console.log('state', state)
-
   useEffect(() => {
     switch (state.status) {
       case 'Mining':
+        if(!isMining) { toast.success('Transaction has been sent') }
         setIsMining(true)
         break
       case 'Success':
         refetch()
+        if(isMining) { toast.success('Product created') }
+        setIsMining(false)
+        break
+      case 'Exception':
+        toast.error(state.errorMessage)
         setIsMining(false)
         break
 
@@ -37,7 +41,7 @@ const SubscriptionPage = () => {
         setIsMining(false)
         break
     }
-  }, [state, refetch])
+  }, [state, refetch, toast])
 
   const toIpfsUrl = (url) => {
     const urlToFile = new URL(url)

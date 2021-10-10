@@ -3,7 +3,7 @@ import { ChakraProvider } from "@chakra-ui/react"
 import theme from "./theme"
 import "@fontsource/inter"
 import { ChainId, DAppProvider } from '@usedapp/core'
-
+import { Toaster } from 'react-hot-toast'
 import "./App.css"
 
 import Router from './router'
@@ -20,6 +20,7 @@ const App = () => {
   return (
     <ChakraProvider theme={theme}>
       <DAppProvider config={config}>
+        <Toaster position='top-center' reverseOrder={false} />
         <Router />
       </DAppProvider>
     </ChakraProvider>
