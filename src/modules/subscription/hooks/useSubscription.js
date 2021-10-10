@@ -6,7 +6,7 @@ import SUBSCRIPTION_HUB_ABI from 'assets/abi/SubscriptionsHub.json'
 
 
 const ANDSUB_HUB_ADDRESS = process.env.REACT_APP_SUBSCRIPTION_HUB_ADDRESS
-
+// REACT_APP_SUBSCRIPTION_HUB_ADDRESS=0xe877E43eAD9182aAb9e1f6F2F5340cC62B2492DB
 
 export const fetchProductInfo = async function (provider, productId) {
   const contract = new Contract(ANDSUB_HUB_ADDRESS, SUBSCRIPTION_HUB_ABI, provider)
