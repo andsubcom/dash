@@ -20,12 +20,12 @@ function LoginPage(props) {
       >
         <Flex flexDirection='row' alignItems='center' justifyContent='center' ml='-12px' mt='38px' mb='62px'>
           <Image
-              marginLeft='6px'
-              marginRight='18px'
-              boxSize="68px"
-              src="/logo.png"
+              // marginLeft='6px'
+              // marginRight='18px'
+              width="300px"
+              height="91px"
+              src="/logo-text-black.png"
             />
-          <LogoText>Andsub</LogoText>
         </Flex>
         <ConnectButton buttonOnly handleOpenModal={() => {}} />
       </Flex>

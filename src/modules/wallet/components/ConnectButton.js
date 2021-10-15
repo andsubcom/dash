@@ -22,17 +22,18 @@ export default function ConnectButton({ handleOpenModal, buttonOnly }) {
       >
         <Button
           onClick={handleConnectWallet}
-          bg="main.400"
+          bg="#000"
           color="#fff" 
-          fontSize="md" 
+          fontSize="lg" 
           fontWeight="medium"
           borderRadius="4px"
+          size="lg"
           border="1px solid transparent"
           _hover={{
             border: "1px",
             borderStyle: "solid",
-            borderColor: "main.300",
-            backgroundColor: "main.300",
+            borderColor: "#1e1e1e",
+            backgroundColor: "#1e1e1e",
           }}
         >
           Connect to a wallet
