@@ -17,14 +17,14 @@ function Header(props) {
       width='280px'
       height='100%'>
       <Link to='/'>
-        <Flex flexDirection='row' alignItems='center' justifyContent='center' ml='-12px' mt='38px' mb='55px'>
+        <Flex flexDirection='row' alignItems='center' justifyContent='center' ml='-12px' mt='48px' mb='55px'>
           <Image
             marginLeft='6px'
             marginRight='12px'
-            boxSize="42px"
-            src="/logo.png"
+            width="140px"
+            heigh="40px"
+            src="/logo-text-black.png"
           />
-          <LogoText>Andsub</LogoText>
         </Flex>
       </Link>
       <MenuList>
