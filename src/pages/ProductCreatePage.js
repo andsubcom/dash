@@ -7,6 +7,8 @@ import {
   FormControl,
   FormLabel,
   Input,
+  InputGroup,
+  InputLeftAddon,
   Select,
   Textarea
 } from '@chakra-ui/react'
@@ -209,17 +211,20 @@ const ProductCreatePage = () => {
           p="12px"
         >
             <form onSubmit={formik.handleSubmit}>
-              <Heading size="md">Subscription details</Heading>
+              <Heading size="md" mb="20px">Subscription details</Heading>
               <FormControl isInvalid={formik.errors['id'] && formik.touched['id']}>
                 <FormLabel ms="4px" fontSize="sm" fontWeight="normal">
-                  ID
+                  Slug ID
                 </FormLabel>
-                <FormInput
-                  name={'id'}
-                  id={'id'}
-                  value={formik.values['id']}
-                  onChange={formik.handleChange}
-                  placeholder='ansub_pro_monthly' />
+                <InputGroup>
+                  <InputLeftAddon children="checkout.andsub.com/" />
+                  <FormInput
+                    name={'id'}
+                    id={'id'}
+                    value={formik.values['id']}
+                    onChange={formik.handleChange}
+                    placeholder='ansub_pro_monthly' />
+                  </InputGroup>
               </FormControl>
               <FormControl isInvalid={formik.errors['name'] && formik.touched['name']}>
                 <FormLabel ms="4px" fontSize="sm" fontWeight="normal">
@@ -232,18 +237,37 @@ const ProductCreatePage = () => {
                   onChange={formik.handleChange}
                   placeholder='Enter name' />
               </FormControl>
-              <FormControl isInvalid={formik.errors['amount'] && formik.touched['amount']}>
-                <FormLabel ms='4px' fontSize='sm' fontWeight='normal'>
-                  Price
-                </FormLabel>
-                <FormInput
-                  name={'amount'}
-                  id={'amount'}
-                  type='number'
-                  value={formik.values['amount']}
-                  onChange={formik.handleChange}
-                  placeholder='Enter price per period' />
-              </FormControl>
+              <Flex>
+                <FormControl isInvalid={formik.errors['amount'] && formik.touched['amount']}>
+                  <FormLabel ms='4px' fontSize='sm' fontWeight='normal'>
+                    Price
+                  </FormLabel>
+                  <FormInput
+                    name={'amount'}
+                    id={'amount'}
+                    type='number'
+                    value={formik.values['amount']}
+                    onChange={formik.handleChange}
+                    placeholder='Enter price per period' />
+                </FormControl>
+                <FormControl isInvalid={formik.errors['period'] && formik.touched['period']} ml="16px">
+                  <FormLabel ms='4px' fontSize='sm' fontWeight='normal'>
+                    Token
+                  </FormLabel>
+                  <FormSelect
+                    name={'token'}
+                    id={'token'}
+                    value={formik.values['token']}
+                    onChange={formik.handleChange}
+                    placeholder='Select token' >
+                    {
+                      Object.keys(TOKENS).map((key) => {
+                        return <option value={TOKENS[key].address}>{`${TOKENS[key].name} (${TOKENS[key].symbol})`}</option>
+                      }) 
+                    }
+                  </FormSelect>
+                </FormControl>
+              </Flex>
               <FormControl isInvalid={formik.errors['period'] && formik.touched['period']}>
                 <FormLabel ms='4px' fontSize='sm' fontWeight='normal'>
                   Period
@@ -257,23 +281,6 @@ const ProductCreatePage = () => {
                   { 
                     Object.keys(SUBSCRIPTION_PERIODS).map((key) => {
                       return <option value={key}>{SUBSCRIPTION_PERIODS[key]}</option>
-                    }) 
-                  }
-                </FormSelect>
-               </FormControl>
-              <FormControl isInvalid={formik.errors['period'] && formik.touched['period']}>
-                <FormLabel ms='4px' fontSize='sm' fontWeight='normal'>
-                  Token
-                </FormLabel>
-                <FormSelect
-                  name={'token'}
-                  id={'token'}
-                  value={formik.values['token']}
-                  onChange={formik.handleChange}
-                  placeholder='Select token' >
-                  {
-                    Object.keys(TOKENS).map((key) => {
-                      return <option value={TOKENS[key].address}>{`${TOKENS[key].name} (${TOKENS[key].symbol})`}</option>
                     }) 
                   }
                 </FormSelect>

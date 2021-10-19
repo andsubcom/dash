@@ -9,6 +9,9 @@ import { PaperUpload } from 'react-iconly'
 
 function NFTUpload({ onChange, ...props }) {
   const theme = useTheme()
+
+  // const h 
+
   return (
     <Flex 
       justifyContent='center' 
