@@ -13,7 +13,7 @@ import { SubscriptionModal, WithdrawWidget, useSubscriptionInfoByOrg, useCreateP
 
 import { TOKENS, SUBSCRIPTION_PERIODS } from 'utils/constants'
 
-const ProductPage = () => {
+const ProductPage = ({ history }) => {
   const { account } = useEthers()
   const [isMining, setIsMining] = useState(false)
   const { state, send } = useCreateProduct()
@@ -189,7 +189,7 @@ const ProductPage = () => {
     } else {
       return (<Button
         key="0"
-        onClick={onOpen}
+        onClick={() => { history.push('/product/create') }}
         colorScheme="main"
         size="sm"
       >

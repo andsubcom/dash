@@ -5,6 +5,7 @@ import PublicLayout from 'layout/PublicLayout'
 import AdminLayout from 'layout/AdminLayout'
 
 import ProductPage from 'pages/ProductPage'
+import ProductCreatePage from 'pages/ProductCreatePage'
 import DashboardPage from 'pages/DashboardPage'
 import LoginPage from 'pages/LoginPage'
 
@@ -26,6 +27,7 @@ const Routes = () => {
   return (
     <Switch>
       <PublicRoute exact path={'/'} component={ProductPage} layout={AdminLayout} />
+      <PublicRoute exact path={'/product/create'} component={ProductCreatePage} layout={AdminLayout} />
       <PublicRoute exact path={'/dashboard'} component={DashboardPage} layout={AdminLayout} />
       <PublicRoute path={'/login'} component={LoginPage} layout={PublicLayout} />
       {/* <PublicRoute component={Error404Page} {...unauthRouteProps} /> */}
