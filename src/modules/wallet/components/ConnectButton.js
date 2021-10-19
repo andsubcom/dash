@@ -50,9 +50,6 @@ export default function ConnectButton({ handleOpenModal, buttonOnly }) {
     <Box
       display="flex"
       alignItems="center"
-      background="#fff"
-      borderRadius="4px"
-      boxShadow='0px 18px 32px rgba(208, 210, 218, 0.20)'
       py="0"
     >
       {/* <Box px="3">
@@ -62,27 +59,30 @@ export default function ConnectButton({ handleOpenModal, buttonOnly }) {
       </Box> */}
       <Button
         onClick={handleOpenModal}
-        bg="#eaecfc"
+        bg="#081343"
+        boxShadow="0px 2px 6px rgba(0, 0, 0, 0.1)"
+        padding="12px 22px"
+        height="56px"
+        borderRadius="56px"
         border="1px solid transparent"
-        _hover={{
-          border: "1px",
-          borderStyle: "solid",
-          borderColor: "blue.400",
-          backgroundColor: "#eaecfc",
+        _active={{
+          bg: "#081343",
+          boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.4)"
         }}
-        borderRadius="4px"
+        _hover={{
+          boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.4)"
+        }}
         m="1px"
         px={3}
-        height="38px"
       >
-        <Text color="#15192C" fontSize="md" fontWeight="medium" mr="2">
+        <Identicon />
+        <Text color="#fff" fontSize="md" fontWeight="medium" ml="2">
           {account &&
             `${account.slice(0, 12)}...${account.slice(
               account.length - 4,
               account.length
             )}`}
         </Text>
-        <Identicon />
       </Button>
     </Box>
   ) : (

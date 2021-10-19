@@ -10,7 +10,7 @@ export default function Identicon() {
   useEffect(() => {
     if (account && ref.current) {
       ref.current.innerHTML = "";
-      ref.current.appendChild(Jazzicon(16, parseInt(account.slice(2, 10), 16)));
+      ref.current.appendChild(Jazzicon(24, parseInt(account.slice(2, 10), 16)));
     }
   }, [account]);
 
@@ -18,9 +18,9 @@ export default function Identicon() {
 }
 
 const StyledIdenticon = styled.div`
-  height: 1rem;
-  width: 1rem;
-  border-radius: 1.125rem;
-  background-color: black;
+  height: 1.6rem;
+  width: 1.6rem;
+  border-radius: 2.125rem;
+  background-color: transparent;
 `
 

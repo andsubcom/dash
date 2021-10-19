@@ -5,7 +5,7 @@ import { useEthers } from '@usedapp/core'
 import toast from 'react-hot-toast'
 
 import { PageWrapper, Sidebar } from 'modules/layout'
-import { Card, Loader } from 'elements'
+import { Card, Loader, StatsCard } from 'elements'
 import styled from '@emotion/styled'
 import { PageHeader, Table } from 'modules/admin'
 
@@ -203,7 +203,13 @@ const ProductPage = ({ history }) => {
     <PageWrapper>
       <Sidebar />
       <PageContainer>
-        <PageHeader mb={'54px'} title='Products' subtitle='Information about your current plan and usages' />
+        <PageHeader mb={'40px'} title='Products' subtitle='Information about your current plan and usages' />
+        <Stack direction="row" spacing='24px' mb='40px'>
+          <StatsCard title="Monthly Revenue" stat="$31 240" bg="#ECECFF" />
+          <StatsCard title="Active Subs" stat="3 432" bg="#EEF1F6" />
+          <StatsCard title="Daily Subs" stat="14" bg="#E4F4F1" />
+          <StatsCard title="Monthly Subs" stat="146" bg="#F5F1DA" />
+        </Stack>
         <Box>
           <Stack direction="row" alignItems="top" marginBottom="1.5rem">
             <Heading size="md">Manage products</Heading>
@@ -211,7 +217,7 @@ const ProductPage = ({ history }) => {
               {renderSubButton()}
             </Stack>
           </Stack>
-          <Card width='1000px'>
+          <Card width='1024px'>
             <Table 
               headers={subscriptionHeaders}
               items={subscriptions}

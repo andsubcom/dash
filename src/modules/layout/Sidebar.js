@@ -4,11 +4,13 @@ import { ifProp } from 'styled-tools'
 
 import { Document, Wallet} from 'react-iconly'
 
-import { Flex, Image } from '@chakra-ui/react'
+import { Flex, Image, useDisclosure } from '@chakra-ui/react'
 import { Link, useLocation } from 'react-router-dom'
+import { ConnectButton, AccountModal } from 'modules/wallet'
 
 function Header(props) {
   const location = useLocation()
+  const { isOpen, onOpen, onClose } = useDisclosure()
 
   return (
     <Flex 
@@ -27,6 +29,9 @@ function Header(props) {
           />
         </Flex>
       </Link>
+      <Flex justifyContent='center' alignItems='center' mb='28px'>
+        <ConnectButton handleOpenModal={onOpen} />
+      </Flex>
       <MenuList>
         <MenuItem to='/dashboard' active={location.pathname === '/dashboard'}> 
           <Flex marginRight='12px'> <Wallet set="bold" primaryColor={location.pathname === '/dashboard' ? '#3850fe' : '#a8aab2'}/></Flex> Dashboard
@@ -35,6 +40,7 @@ function Header(props) {
           <Flex marginRight='12px'> <Document set="bold" primaryColor={['/', '/product/create'].includes(location.pathname) ? '#3850fe' : '#a8aab2'}/></Flex> Products
         </MenuItem>
       </MenuList>
+      <AccountModal isOpen={isOpen} onClose={onClose} />
     </Flex>
   )
 }

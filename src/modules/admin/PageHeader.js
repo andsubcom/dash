@@ -26,8 +26,6 @@ function PageHeader({ title, subtitle, ...props }) {
             Get Premium
           </Button>
         </Link> */}
-        <ConnectButton handleOpenModal={onOpen} />
-        <AccountModal isOpen={isOpen} onClose={onClose} />
       </Flex>
     </Flex>
   )
