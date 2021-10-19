@@ -13,7 +13,7 @@ import { SubscriptionModal, WithdrawWidget, useSubscriptionInfoByOrg, useCreateP
 
 import { TOKENS, SUBSCRIPTION_PERIODS } from 'utils/constants'
 
-const SubscriptionPage = () => {
+const ProductPage = () => {
   const { account } = useEthers()
   const [isMining, setIsMining] = useState(false)
   const { state, send } = useCreateProduct()
@@ -203,7 +203,7 @@ const SubscriptionPage = () => {
     <PageWrapper>
       <Sidebar />
       <PageContainer>
-        <PageHeader mb={'54px'} title='Subscriptions' subtitle='Information about your current plan and usages' />
+        <PageHeader mb={'54px'} title='Products' subtitle='Information about your current plan and usages' />
         <Box>
           <Stack direction="row" alignItems="top" marginBottom="1.5rem">
             <Heading size="md">Manage products</Heading>
@@ -237,8 +237,8 @@ const PageContainer = styled(Flex)`
   align-items: flex-start;
 `
 
-SubscriptionPage.propTypes = {
+ProductPage.propTypes = {
 
 }
 
-export default SubscriptionPage
+export default ProductPage
