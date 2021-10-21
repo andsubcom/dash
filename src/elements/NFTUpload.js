@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useRef, useState } from 'react'
 import PropTypes from 'prop-types'
 import styled from '@emotion/styled'
 import { useTheme } from '@emotion/react'
@@ -8,9 +8,19 @@ import { Flex, Box } from '@chakra-ui/react'
 import { PaperUpload } from 'react-iconly'
 
 function NFTUpload({ onChange, ...props }) {
+  const inputRef = useRef(null)
   const theme = useTheme()
+  const [preview, setPreview] = useState()
 
-  // const h 
+  const handleChange = (event) => {
+    const objectUrl = URL.createObjectURL(event.target.files[0])
+    setPreview(objectUrl)
+    onChange(event)
+  }
+
+  const handleClick = () => {
+    inputRef.current.click()
+  }
 
   return (
     <Flex 
@@ -19,22 +29,24 @@ function NFTUpload({ onChange, ...props }) {
       position='relative'
       minWidth={'150px'}
       minHeight={'170px'}
+      onClick={handleClick}
       {...props}>
       <input
+        {...props}
+        ref={inputRef}
         style={{display: 'none'}}
         type='file'
-        id='nftImage'
-        name='nftImage'
-        onChange={onChange}
-        accept='.jpg,.jpeg,.png,.svg'
+        onChange={handleChange}
       />
-      <ImagePlaceholder>
-        <Flex flexDirection='row' fontSize='14px' alignItems='center' justifyContent='center'>
-          <PaperUpload set="light" primaryColor={theme.colors.primary}/>
-          {' '} Upload Image
-        </Flex>
-      </ImagePlaceholder>
-      {/* <ImagePreview src='https://ipfs.io/ipfs/QmS6DT485Um7Ps5sChSkV2ksUjzV14cKeDssPDSMGE4eon' /> */}
+      {
+        !preview && <ImagePlaceholder>
+          <Flex flexDirection='row' fontSize='14px' alignItems='center' justifyContent='center'>
+            <PaperUpload set="light" primaryColor={theme.colors.primary}/>
+            {' '} Upload Image
+          </Flex>
+        </ImagePlaceholder> 
+      }
+      { preview && <ImagePreview src={preview} /> }
     </Flex>
   )
 }

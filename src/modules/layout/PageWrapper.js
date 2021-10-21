@@ -1,8 +1,10 @@
 import React from 'react'
 
 import { Flex } from '@chakra-ui/react'
+import { useTheme } from '@emotion/react'
 
 function PageWrapper({children, ...rest}) {
+  const theme = useTheme()
   return (
     <Flex
       position='relative'
@@ -11,9 +13,9 @@ function PageWrapper({children, ...rest}) {
       alignItems='flex-start'
       h='100vh'
       w='100%'
-      bg='#f8f9fc'
+      bg={theme.colors.background}
       {...rest}
-      >
+    >
       { children }
     </Flex>
   )

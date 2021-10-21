@@ -15,12 +15,14 @@ import {
 import { ExternalLinkIcon } from '@chakra-ui/icons'
 import { useEthers } from '@usedapp/core'
 import toast from 'react-hot-toast'
+import styled from '@emotion/styled'
+import { useTheme } from '@emotion/react'
 
 import { Link } from 'react-router-dom'
+import { parseUnits } from '@ethersproject/units'
 
-import { PageWrapper, Sidebar } from 'modules/layout'
+import { PageWrapper, Sidebar, PageContainer } from 'modules/layout'
 import { Card, Loader, NFTUpload, BackLink } from 'elements'
-import styled from '@emotion/styled'
 import { PageHeader } from 'modules/admin'
 
 import { useSubscriptionInfoByOrg, useCreateProduct } from 'modules/subscription'
@@ -51,12 +53,14 @@ const FormSelect = ({children,...props}) => (<Select
     {children}
   </Select>)
 
-const ProductCreatePage = () => {
+const ProductCreatePage = ({ history }) => {
   const { account } = useEthers()
+  const theme = useTheme()
+  const [loading, setLoading] = useState(false)
   const [isMining, setIsMining] = useState(false)
   const { state, send } = useCreateProduct()
 
-  const { products, refetch } = useSubscriptionInfoByOrg(account)
+  const { refetch } = useSubscriptionInfoByOrg(account)
 
   useEffect(() => {
     switch (state.status) {
@@ -68,14 +72,18 @@ const ProductCreatePage = () => {
         refetch()
         if(isMining) { toast.success('Product created') }
         setIsMining(false)
+        setLoading(false)
+        history.push('/')
         break
       case 'Exception':
         toast.error(state.errorMessage)
         setIsMining(false)
+        setLoading(false)
         break
 
       default:
         setIsMining(false)
+        setLoading(false)
         break
     }
   }, [state, refetch, toast])
@@ -139,34 +147,33 @@ const ProductCreatePage = () => {
       .then(json => { return json["metadata_uri"] })
   }
 
-  // const hadnleSubFormSubmit = (values) => {
-  //   const id = values.id
-  //   const name = values.name
-  //   const description = values.description
-  //   const payableToken = values.token
-  //   const nftImage = values.nftImage
-  //   const amount = parseUnits(values.amount + '', 18)
-  //   const period = +(values.period)
+  const hadnleSubFormSubmit = (values) => {
+    const id = values.id
+    const name = values.name
+    const description = values.description
+    const payableToken = values.token
+    const nftImage = values.nftImage
+    const amount = parseUnits(values.amount + '', 18)
+    const period = +(values.period)
 
-  //   const uploadMetadataWithImageUrl = (imageUrl) => { return uploadMetadata(name, description, imageUrl) }
+    const uploadMetadataWithImageUrl = (imageUrl) => { return uploadMetadata(name, description, imageUrl) }
 
-  //   const sendSubscriptionToSmartContract = (metadataUri) => {
-  //     if (nftImage && !metadataUri) {
-  //       // TODO: notify user about image loading failure
-  //       return
-  //     }
-  //     console.log('metadataUri', metadataUri)
-  //     // TODO: pass URI to create product call
-  //     send(id, name, payableToken, amount, period, metadataUri || '')
-  //   }
+    const sendSubscriptionToSmartContract = (metadataUri) => {
+      if (nftImage && !metadataUri) {
+        // TODO: notify user about image loading failure
+        return
+      }
+      // TODO: pass URI to create product call
+      send(id, name, payableToken, amount, period, metadataUri || '')
+    }
 
-  //   uploadFileToIPFSUsingNFTPort(nftImage)
-  //     .then(uploadMetadataWithImageUrl)
-  //     .then(sendSubscriptionToSmartContract)
-  //     .catch(err => { console.log('transaction error --->', err) })
+    uploadFileToIPFSUsingNFTPort(nftImage)
+      .then(uploadMetadataWithImageUrl)
+      .then(sendSubscriptionToSmartContract)
+      .catch(err => { console.log('transaction error --->', err) })
 
-  //   onClose()
-  // }
+    // onClose()
+  }
 
 
   const formik = useFormik({
@@ -185,14 +192,29 @@ const ProductCreatePage = () => {
         .required('Required filed'),
     }),
     onSubmit: (values, { resetForm }) => {
-      // onSubmit(values)
-
-      resetForm()
+      setLoading(true)
+      console.log('loading', loading)
+      hadnleSubFormSubmit(values)
+      // resetForm()
     }
   })
 
   const uploadImage = (event) => {
     formik.values['nftImage'] = event.target.files[0]
+  }
+
+  const renderLoader = () => {
+    if(loading || isMining) { 
+      return (
+        <LoaderContainer>
+          <Box ml='-24  px' mt='-160px'>
+            <Loader color={theme.colors.primary} />
+          </Box>
+        </LoaderContainer>
+      )
+    } else {
+      return <></>
+    }    
   }
 
   return (
@@ -221,11 +243,13 @@ const ProductCreatePage = () => {
           w={{ base: "100%"}}
         >
         <Flex
+          position='relative'
           direction="column"
           w="100%"
           background="transparent"
           p="12px"
         >
+            { renderLoader() }
             <form onSubmit={formik.handleSubmit}>
               <Heading size="md" mb="20px">Subscription details</Heading>
               <FormControl isInvalid={formik.errors['id'] && formik.touched['id']}>
@@ -303,7 +327,13 @@ const ProductCreatePage = () => {
                </FormControl>
               <Heading size="md">NFT data</Heading>
               <Flex flexDirection='row'>
-                <NFTUpload mt='28px' mr='12px' onChange={uploadImage} />
+                <Box mt='28px' mr='12px'>
+                  <NFTUpload 
+                    id='nftImage'
+                    name='nftImage'
+                    accept='.jpg,.jpeg,.png,.svg'
+                    onChange={uploadImage} />
+                </Box>
                 <FormControl isInvalid={formik.errors['description'] && formik.touched['description']}>
                   <FormLabel ms="4px" fontSize="sm" fontWeight="normal">
                     Description
@@ -340,13 +370,19 @@ const ProductCreatePage = () => {
   )
 }
 
-const PageContainer = styled(Flex)`
-  padding: 40px 60px;
-  width: calc(100% - 260px);
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
+const LoaderContainer = styled(Flex)`
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  background: #fff;
+  opacity: 0.75;
+  z-index: 12;
+  justify-content: center;
+  align-items: center;
 `
 
 ProductCreatePage.propTypes = {

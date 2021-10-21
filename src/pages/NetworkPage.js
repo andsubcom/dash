@@ -26,14 +26,6 @@ function NetworkPage(props) {
   )
 }
 
-const LogoText = styled.span`
-  font-size: 42px;
-  font-weight: 700;
-  line-height: 1.4;
-  letter-spacing: .86px;
-  color: #000;
-`
-
 NetworkPage.propTypes = {
 
 }

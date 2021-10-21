@@ -5,8 +5,8 @@ import { parseUnits, formatUnits } from '@ethersproject/units'
 import { useEthers } from '@usedapp/core'
 import toast from 'react-hot-toast'
 
-import { PageWrapper, Sidebar } from 'modules/layout'
-import { Card, Loader, StatsCard } from 'elements'
+import { PageWrapper, Sidebar, PageContainer } from 'modules/layout'
+import { StatsCard } from 'elements'
 import styled from '@emotion/styled'
 import { PageHeader, Table } from 'modules/admin'
 
@@ -191,15 +191,6 @@ const ProductPage = ({ history }) => {
     </PageWrapper>
   )
 }
-
-const PageContainer = styled(Flex)`
-  padding: 40px 60px;
-  width: calc(100% - 260px);
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
-`
 
 ProductPage.propTypes = {
 
