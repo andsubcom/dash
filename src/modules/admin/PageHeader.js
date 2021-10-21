@@ -14,6 +14,7 @@ function PageHeader({ title, subtitle, ...props }) {
       flexDirection='row'
       justifyContent='space-between'
       width='100%'
+      maxW='570px'
       alignItems='center'
       {...props}>
       <Flex flexDirection='column'>

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Flex, useDisclosure, Box, Stack, Heading, Button } from '@chakra-ui/react'
+import { AddIcon } from '@chakra-ui/icons'
 import { parseUnits, formatUnits } from '@ethersproject/units'
 import { useEthers } from '@usedapp/core'
 import toast from 'react-hot-toast'
@@ -9,7 +10,7 @@ import { Card, Loader, StatsCard } from 'elements'
 import styled from '@emotion/styled'
 import { PageHeader, Table } from 'modules/admin'
 
-import { SubscriptionModal, WithdrawWidget, useSubscriptionInfoByOrg, useCreateProduct } from 'modules/subscription'
+import { SubscriptionModal, ProductItem, useSubscriptionInfoByOrg, useCreateProduct } from 'modules/subscription'
 
 import { TOKENS, SUBSCRIPTION_PERIODS } from 'utils/constants'
 
@@ -144,60 +145,11 @@ const ProductPage = ({ history }) => {
       amount: formatUnits(product.amount, token.decimals),
       token: token,
       period: SUBSCRIPTION_PERIODS[product.period.toNumber()],
-      subscribers: 15
+      uri: product.uri
     }
   })
 
-  const subscriptionHeaders = [
-    {
-      id: "id",
-      title: "ID",
-    },
-    {
-      id: "name",
-      title: "Name",
-    },
-    {
-      id: "amount",
-      title: "Price",
-    },
-    {
-      id: "token",
-      title: "Token",
-    },
-    {
-      id: "period",
-      title: "Period",
-    },
-    {
-      id: "subscribers",
-      title: "Subscribers",
-    }
-  ]
-
-  const renderSubButton = () => {
-    if (isMining) {
-      return (<Button
-        key="0"
-        onClick={() => { }}
-        disabled
-        colorScheme="main"
-        size="sm"
-      >
-        <Loader width={5} height={5} mr={2} /> Creating product
-      </Button>)
-    } else {
-      return (<Button
-        key="0"
-        onClick={() => { history.push('/product/create') }}
-        colorScheme="main"
-        size="sm"
-      >
-        Add product
-      </Button>)
-    }
-  }
-
+  console.log('products', products)
 
   return (
     <PageWrapper>
@@ -214,18 +166,24 @@ const ProductPage = ({ history }) => {
           <Stack direction="row" alignItems="top" marginBottom="1.5rem">
             <Heading size="md">Manage products</Heading>
             <Stack direction={["column", "row"]} style={{ marginLeft: "auto" }}>
-              {renderSubButton()}
+              <Button
+                key="0"
+                leftIcon={<AddIcon />}
+                onClick={() => { history.push('/product/create') }}
+                colorScheme='main'
+                borderRadius='40px'
+                fontSize='14px'
+                textTransform='uppercase'
+                fontWeight='600'
+                size="sm"
+              >
+                Add product
+              </Button>
             </Stack>
           </Stack>
-          <Card width='1024px'>
-            <Table 
-              headers={subscriptionHeaders}
-              items={subscriptions}
-              renderActions={(product) => {
-                return <WithdrawWidget product={product} />
-              }}
-            />
-          </Card>
+          <Stack w="1024px" direction="column" spacing="16px">
+            { subscriptions.map( product => (<ProductItem key={product.id} product={product} />)) }
+          </Stack>
         </Box>
 
       </PageContainer>

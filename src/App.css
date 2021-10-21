@@ -19,7 +19,11 @@
 }
 
 html, body {
-  font-family: 'Averta';
+  font-family: 'Poppins';
+}
+
+a {
+  color: #3257F4;
 }
 
 .chakra-ui-table {

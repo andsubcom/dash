@@ -12,11 +12,14 @@ import {
   Select,
   Textarea
 } from '@chakra-ui/react'
+import { ExternalLinkIcon } from '@chakra-ui/icons'
 import { useEthers } from '@usedapp/core'
 import toast from 'react-hot-toast'
 
+import { Link } from 'react-router-dom'
+
 import { PageWrapper, Sidebar } from 'modules/layout'
-import { Card, Loader, NFTUpload } from 'elements'
+import { Card, Loader, NFTUpload, BackLink } from 'elements'
 import styled from '@emotion/styled'
 import { PageHeader } from 'modules/admin'
 
@@ -196,7 +199,20 @@ const ProductCreatePage = () => {
     <PageWrapper>
       <Sidebar />
       <PageContainer>
-        <PageHeader mb={'54px'} title='Create product' subtitle='Subscription details and NFT token data' />
+        <BackLink>
+          <Link to='/'>Back to Products</Link>
+        </BackLink>
+        <PageHeader 
+          mt='16px' 
+          mb='54px' 
+          title='Create product' 
+          subtitle={
+            <span style={{fontSize: '16px', lineHeight: '24px'}}> 
+              Here you can add name, picture and discription to NFT token associated with your product.
+              User will see this data on the checkout page. <a target="_blank" rel="noreferrer" href="https://checkout.andsub.com/art_school">Check example <ExternalLinkIcon marginTop='-5px' /></a>
+            </span>
+           } 
+          />
           <Card width='640px' padding='16px 12px'>
             <Flex
           alignItems="center"
@@ -235,12 +251,12 @@ const ProductCreatePage = () => {
                   id={'name'}
                   value={formik.values['name']}
                   onChange={formik.handleChange}
-                  placeholder='Enter name' />
+                  placeholder='Enter name for NFT. This text will be displayed to user on the checkout page' />
               </FormControl>
               <Flex>
                 <FormControl isInvalid={formik.errors['amount'] && formik.touched['amount']}>
                   <FormLabel ms='4px' fontSize='sm' fontWeight='normal'>
-                    Price
+                    Amount
                   </FormLabel>
                   <FormInput
                     name={'amount'}
@@ -299,7 +315,7 @@ const ProductCreatePage = () => {
                       onChange={formik.handleChange}
                       rows='7'
                       resize={false}
-                      placeholder='Enter optional NFT description' />
+                      placeholder='Enter optional NFT description. This text will be displayed to user on the checkou page' />
                 </FormControl>
                
               </Flex>

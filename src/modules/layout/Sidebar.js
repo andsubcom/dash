@@ -25,7 +25,7 @@ function Header(props) {
             marginRight='12px'
             width="140px"
             heigh="40px"
-            src="/logo-text-black.png"
+            src="/logo-text-light.png"
           />
         </Flex>
       </Link>

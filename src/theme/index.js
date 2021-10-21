@@ -3,8 +3,8 @@ import { extendTheme, theme } from "@chakra-ui/react"
 export default extendTheme({
   ...theme,
   fonts: {
-    heading: "Averta",
-    body: "Averta",
+    heading: "Poppins",
+    body: "Poppins",
   },
   colors: {
     ...theme.colors,
@@ -15,7 +15,7 @@ export default extendTheme({
       200: '#7f93ff',
       300: '#4d63fe',
       400: '#1e45fd',
-      500: '#063be3',
+      500: '#1e45fd',
       600: '#0139b2',
       700: '#003280',
       800: '#00244f',
@@ -36,5 +36,13 @@ export default extendTheme({
       500: "#718096",
       600: "#4A5568"
     }
-  }
+  },
+  styles: {
+    global: {
+      // styles for the `a`
+      a: {
+        color: "main.500",
+      },
+    },
+  },
 })
