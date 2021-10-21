@@ -37,22 +37,22 @@ function ProductItem({ product }) {
         <Cell w="104">
           <ImageContainer background={`url('${imageUrl}') #C4C4C4`} />
         </Cell>
-        <Cell w="200px">
+        <Cell w="190px">
           <Box>
-            <Slug>{product.id}</Slug>
+            <Slug href={`https://checkout.andsub.com/${product.id}`} target="_blank">{product.id}</Slug>
             <Bold>{product.name}</Bold>
           </Box>
         </Cell>
         <Cell w="150px">
           <Box>
             <Label>Price</Label>
-            <Bold>{product.amount} <Link href="#">{product.token.symbol}</Link></Bold>
+            <Bold>{product.amount} <Link href="#" target="_blank">{product.token.symbol}</Link></Bold>
           </Box>
         </Cell>
-        <Cell w="160px">
+        <Cell w="170px">
           <Box>
             <Label>Total Revenue</Label>
-            <Bold>3245 {product.token.symbol} <Link href="#">Withdraw</Link></Bold>
+            <Bold>324 {product.token.symbol} <Link href="#">Claim</Link></Bold>
           </Box>
         </Cell>
         <Cell w="132px">

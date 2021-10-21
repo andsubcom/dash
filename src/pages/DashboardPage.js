@@ -14,7 +14,7 @@ const AdminPage = () => {
       <Sidebar />
       <PageContainer>
         <PageHeader mb={'54px'} title='Dashboard' subtitle='Information about your current plan and usages' />
-        <Card width='800px' mb='36px'>
+        {/* <Card width='800px' mb='36px'>
           <Grid padding='32px 30px' w='100%' templateColumns="repeat(4, 1fr)" gap={6}>
             <Flex flexDirection='row' w="100%">
               <DashIconContainer color='#FFF7F0'>
@@ -53,7 +53,7 @@ const AdminPage = () => {
               </Flex>
             </Flex>
           </Grid>
-        </Card>
+        </Card> */}
       </PageContainer>
     </PageWrapper>
   )
