@@ -88,7 +88,6 @@ const Cell = styled(Flex)`
 `
 
 const ImageContainer = styled(Box)`
-  /* background: url('https://ipfs.io/ipfs/QmS6DT485Um7Ps5sChSkV2ksUjzV14cKeDssPDSMGE4eon'); */
   background-size: cover;
   background-position: 50% 50%;
   background-repeat: no-repeat;
