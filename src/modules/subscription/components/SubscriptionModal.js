@@ -49,7 +49,7 @@ export default function SubscriptionModal({ isOpen, onClose, onSubmit }) {
       'name': Yup.string()
         .required('Required filed'),
       'description': Yup.string(),
-      'amount': Yup.string()
+      'price': Yup.string()
         .required('Required filed'),
       'period': Yup.string()
         .required('Required filed'),
@@ -138,10 +138,10 @@ export default function SubscriptionModal({ isOpen, onClose, onSubmit }) {
                   Price
                 </FormLabel>
                 <FormInput
-                  name={'amount'}
-                  id={'amount'}
+                  name={'price'}
+                  id={'price'}
                   type='number'
-                  value={formik.values['amount']}
+                  value={formik.values['price']}
                   onChange={formik.handleChange}
                   placeholder='Enter price per period' />
               </FormControl>

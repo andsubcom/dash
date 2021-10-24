@@ -14,7 +14,7 @@ function ProductItem({ product }) {
 
   const [metadata, setMetadata] = useState()
 
-  const metadataUrl = ipfsToGateway(product.uri)
+  const metadataUrl = ipfsToGateway(product.metadataUri || '')
   const imageUrl = metadata ? ipfsToGateway(metadata.image) : undefined
 
   useEffect(() => {
@@ -46,13 +46,13 @@ function ProductItem({ product }) {
         <Cell w="150px">
           <Box>
             <Label>Price</Label>
-            <Bold>{product.amount} <Link href="#" target="_blank">{product.token.symbol}</Link></Bold>
+            <Bold>{product.price} <Link href="#" target="_blank">{product?.token?.symbol}</Link></Bold>
           </Box>
         </Cell>
         <Cell w="170px">
           <Box>
             <Label>Total Revenue</Label>
-            <Bold>324 {product.token.symbol} <Link href="#">Claim</Link></Bold>
+            <Bold>324 {product?.token?.symbol} <Link href="#">Claim</Link></Bold>
           </Box>
         </Cell>
         <Cell w="132px">

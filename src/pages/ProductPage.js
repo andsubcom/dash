@@ -109,7 +109,7 @@ const ProductPage = ({ history }) => {
     const description = values.description
     const payableToken = values.token
     const nftImage = values.nftImage
-    const amount = parseUnits(values.amount + '', 18)
+    const price = parseUnits(values.price + '', 18)
     const period = +(values.period)
 
     const uploadMetadataWithImageUrl = (imageUrl) => { return uploadMetadata(name, description, imageUrl) }
@@ -121,7 +121,7 @@ const ProductPage = ({ history }) => {
       }
       console.log('metadataUri', metadataUri)
       // TODO: pass URI to create product call
-      send(id, name, payableToken, amount, period, metadataUri || '')
+      send(id, name, payableToken, price, period, metadataUri || '')
     }
 
     uploadFileToIPFSUsingNFTPort(nftImage)
@@ -137,15 +137,16 @@ const ProductPage = ({ history }) => {
   // if(!products) { return <></> }
 
   const subscriptions = products.map((product, i) => {
+    console.log('product', product)
     const token = Object.keys(TOKENS).map(key => TOKENS[key])
       .find(token => token.address.toUpperCase() === product.payableToken.toUpperCase())
     return {
       id: product.id,
       name: product.name,
-      amount: formatUnits(product.amount, token.decimals),
+      price: formatUnits(product.price + '', token.decimals),
       token: token,
       period: SUBSCRIPTION_PERIODS[product.period.toNumber()],
-      uri: product.uri
+      metadataUri: product.metadataUri
     }
   })
 
