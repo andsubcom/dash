@@ -48,30 +48,36 @@ export default function WithdrawModal({ isOpen, onClose }) {
             <Description>Short explanation to user on how subscriptions work and why user needs to withdraw money</Description>
             {/* <Flex p='4px 0px 8px 0px'><Text>Amount available: </Text><Bold ml={'6px'}> 324 USDX</Bold></Flex> */}
             <Flex
+              w='100%'
+              flexDirection='column'
+              justifyContent='center'
+              alignItems='center'
+              >
+              <Label mt='20px'>Available Amount</Label>
+              <Price
+                fontSize='32px'>
+                  324.54
+              </Price>
+              <Token mb='18px'>USDX</Token>
+            </Flex>
+            <Flex
               justifyContent='center'
               alignItems='center'
               width='100%'
               padding='16px 0px'
               >
-              <Flex 
-                borderWidth="2px"
-                borderColor="main.400"
-                justifyContent="center"
-                alignItems="center"
-                borderRadius="40px">
-                <Button
-                    key="0"
-                    onClick={() => {  }}
-                    colorScheme='main'
-                    borderRadius='40px'
-                    fontSize='15px'
-                    fontWeight='600'
-                    size="lg"
-                  >
-                  Withdraw
-                </Button>
-                <Bold p={'0px 16px 0px 8px'}> 324.32 USDX</Bold>
-              </Flex>
+              <Button
+                  key="0"
+                  onClick={() => {  }}
+                  colorScheme='main'
+                  borderRadius='40px'
+                  textTransform='uppercase'
+                  fontSize='14px'
+                  fontWeight='500'
+                  size="lg"
+                >
+                Withdraw
+              </Button>
             </Flex>
           </Flex>
         </ModalBody>
@@ -85,6 +91,21 @@ const Description = styled(Text)`
   font-size: 15px;
   padding-right: 32px;
   margin-bottom: 12px;
+`
+
+const Label = styled(Text)`
+  color: ${prop('theme.colors.font.primary')};
+  font-size: 16px;
+  line-height: 24px;
+`
+
+const Price = styled(Label)`
+  font-size: 32px;
+  line-height: 48px;
+`
+
+const Token = styled(Label)`
+  color: #93959D;
 `
 
 const Bold = styled(Text)`
