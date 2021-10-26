@@ -66,7 +66,7 @@ function ProductItem({ product }) {
           <Dots src='/dots.png' />
         </Cell>
       </HStack>
-      <WithdrawModal isOpen={isOpen} onClose={onClose} />
+      <WithdrawModal isOpen={isOpen} onClose={onClose} product={product} />
     </Element>
   )
 }

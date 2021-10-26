@@ -87,8 +87,8 @@ export const useCreateProduct = function() {
   return useContractFunction(contract, 'createProduct', { transactionName: 'Create Product'})
 }
 
-export const useWithdrawPaymentForProduct = function() {
+export const useRenewProductSubscriptions = function() {
   const abi = new Interface(SUBSCRIPTION_HUB_ABI)
   const contract = new Contract(ANDSUB_HUB_ADDRESS, abi)
-  return useContractFunction(contract, 'withdrawPaymentForProduct', { transactionName: 'Withdraw Payment'})
+  return useContractFunction(contract, 'renewProductSubscriptions', { transactionName: 'Renew Product Subscription'})
 }
