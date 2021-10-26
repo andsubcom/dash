@@ -5,12 +5,13 @@ import styled from '@emotion/styled'
 import { prop } from 'styled-tools'
 import { useTheme } from '@emotion/react'
 
-import { Flex, HStack, Box } from '@chakra-ui/react'
-
+import { Flex, HStack, Box, useDisclosure } from '@chakra-ui/react'
 import { ipfsToGateway } from 'utils/helpers'
+import WithdrawModal from './WithdrawModal'
 
 function ProductItem({ product }) {
   const theme = useTheme()
+  const { isOpen, onOpen, onClose } = useDisclosure()
 
   const [metadata, setMetadata] = useState()
 
@@ -52,7 +53,7 @@ function ProductItem({ product }) {
         <Cell w="170px">
           <Box>
             <Label>Total Revenue</Label>
-            <Bold>324 {product?.token?.symbol} <Link href="#">Claim</Link></Bold>
+            <Bold>324 {product?.token?.symbol} <Link href="#" onClick={onOpen}>Claim</Link></Bold>
           </Box>
         </Cell>
         <Cell w="132px">
@@ -65,6 +66,7 @@ function ProductItem({ product }) {
           <Dots src='/dots.png' />
         </Cell>
       </HStack>
+      <WithdrawModal isOpen={isOpen} onClose={onClose} />
     </Element>
   )
 }
