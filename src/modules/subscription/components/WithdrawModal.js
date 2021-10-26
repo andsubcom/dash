@@ -27,7 +27,7 @@ export default function WithdrawModal({ isOpen, onClose }) {
         borderColor='whiteAlpha.700'
         borderRadius='4px'
       >
-        <ModalHeader px={4} fontSize='xl' fontWeight='600'>
+        <ModalHeader px={5} fontSize='xl' fontWeight='600'>
           Create Subscription
         </ModalHeader>
         <ModalCloseButton
@@ -37,7 +37,7 @@ export default function WithdrawModal({ isOpen, onClose }) {
             color: 'black.700',
           }}
         />
-        <ModalBody pt={0} px={4}>
+        <ModalBody pt={0} px={0}>
           <Flex
             flexDirection="column"
             alignItems="start"
@@ -48,33 +48,36 @@ export default function WithdrawModal({ isOpen, onClose }) {
             <Description>Short explanation to user on how subscriptions work and why user needs to withdraw money</Description>
             {/* <Flex p='4px 0px 8px 0px'><Text>Amount available: </Text><Bold ml={'6px'}> 324 USDX</Bold></Flex> */}
             <Flex
-              w='100%'
-              flexDirection='column'
-              justifyContent='center'
-              alignItems='center'
-              >
-              <Label mt='20px'>Available Amount</Label>
-              <Price
-                fontSize='32px'>
-                  324.54
-              </Price>
-              <Token mb='18px'>USDX</Token>
-            </Flex>
-            <Flex
-              justifyContent='center'
+              justifyContent='space-between'
               alignItems='center'
               width='100%'
-              padding='16px 0px'
+              padding='18px 28px 10px 20px'
               >
+              <Flex
+                w='100%'
+                flexDirection='column'
+                justifyContent='flex-start'
+                alignItems='flex-start'
+                >
+                <Label mt='0px'>Available Amount</Label>
+                <Flex flexDirection='row' alignItems='flex-end'>
+                  <Price
+                    fontSize='32px'>
+                      324.54
+                  </Price>
+                  <Token ml='4px' mb='6px'>USDX</Token>            
+                </Flex>
+              </Flex>
               <Button
                   key="0"
                   onClick={() => {  }}
+                  padding='0px 32px'
                   colorScheme='main'
                   borderRadius='40px'
                   textTransform='uppercase'
                   fontSize='14px'
                   fontWeight='500'
-                  size="lg"
+                  size="md"
                 >
                 Withdraw
               </Button>
@@ -89,8 +92,10 @@ export default function WithdrawModal({ isOpen, onClose }) {
 const Description = styled(Text)`
   color: ${prop('theme.colors.font.secondary')};
   font-size: 15px;
-  padding-right: 32px;
-  margin-bottom: 12px;
+  /* padding-right: 32px; */
+  padding-bottom: 12px;
+  padding: 0px 20px 12px;
+  border-bottom: 1px solid #e9eef6;
 `
 
 const Label = styled(Text)`
