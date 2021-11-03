@@ -1,5 +1,9 @@
 [
-  { "inputs": [], "stateMutability": "nonpayable", "type": "constructor" },
+  {
+    "inputs": [],
+    "stateMutability": "nonpayable",
+    "type": "constructor"
+  },
   {
     "anonymous": false,
     "inputs": [
@@ -157,12 +161,36 @@
   },
   {
     "inputs": [
-      { "internalType": "string", "name": "productId", "type": "string" },
-      { "internalType": "string", "name": "name", "type": "string" },
-      { "internalType": "address", "name": "payableToken", "type": "address" },
-      { "internalType": "uint256", "name": "price", "type": "uint256" },
-      { "internalType": "uint256", "name": "period", "type": "uint256" },
-      { "internalType": "string", "name": "metadataUri", "type": "string" }
+      {
+        "internalType": "string",
+        "name": "productId",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "internalType": "address",
+        "name": "payableToken",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "price",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "period",
+        "type": "uint256"
+      },
+      {
+        "internalType": "string",
+        "name": "metadataUri",
+        "type": "string"
+      }
     ],
     "name": "createProduct",
     "outputs": [],
@@ -171,45 +199,145 @@
   },
   {
     "inputs": [
-      { "internalType": "string", "name": "productId", "type": "string" },
-      { "internalType": "address", "name": "user", "type": "address" }
+      {
+        "internalType": "string",
+        "name": "productId",
+        "type": "string"
+      },
+      {
+        "internalType": "address",
+        "name": "user",
+        "type": "address"
+      }
     ],
     "name": "findTokenId",
-    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [
-      { "internalType": "uint256", "name": "tokenId", "type": "uint256" }
+      {
+        "internalType": "uint256",
+        "name": "tokenId",
+        "type": "uint256"
+      }
     ],
     "name": "findTokenProduct",
-    "outputs": [{ "internalType": "string", "name": "", "type": "string" }],
+    "outputs": [
+      {
+        "internalType": "string",
+        "name": "",
+        "type": "string"
+      }
+    ],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [
-      { "internalType": "address", "name": "owner", "type": "address" }
+      {
+        "internalType": "address",
+        "name": "owner",
+        "type": "address"
+      }
     ],
     "name": "getOwnerProductIds",
-    "outputs": [{ "internalType": "string[]", "name": "", "type": "string[]" }],
+    "outputs": [
+      {
+        "internalType": "string[]",
+        "name": "",
+        "type": "string[]"
+      }
+    ],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [
-      { "internalType": "string", "name": "productId", "type": "string" }
+      {
+        "internalType": "string",
+        "name": "productId",
+        "type": "string"
+      }
     ],
     "name": "getProductInfo",
     "outputs": [
-      { "internalType": "string", "name": "id", "type": "string" },
-      { "internalType": "string", "name": "name", "type": "string" },
-      { "internalType": "uint256", "name": "price", "type": "uint256" },
-      { "internalType": "address", "name": "payableToken", "type": "address" },
-      { "internalType": "uint256", "name": "period", "type": "uint256" },
-      { "internalType": "address", "name": "productOwner", "type": "address" },
-      { "internalType": "string", "name": "metadataUri", "type": "string" }
+      {
+        "internalType": "string",
+        "name": "id",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "internalType": "uint256",
+        "name": "price",
+        "type": "uint256"
+      },
+      {
+        "internalType": "address",
+        "name": "payableToken",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "period",
+        "type": "uint256"
+      },
+      {
+        "internalType": "address",
+        "name": "productOwner",
+        "type": "address"
+      },
+      {
+        "internalType": "string",
+        "name": "metadataUri",
+        "type": "string"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "string",
+        "name": "productId",
+        "type": "string"
+      }
+    ],
+    "name": "getProductSubscribers",
+    "outputs": [
+      {
+        "internalType": "address[]",
+        "name": "",
+        "type": "address[]"
+      },
+      {
+        "internalType": "uint256[]",
+        "name": "",
+        "type": "uint256[]"
+      },
+      {
+        "internalType": "uint256[]",
+        "name": "",
+        "type": "uint256[]"
+      },
+      {
+        "internalType": "uint256[]",
+        "name": "",
+        "type": "uint256[]"
+      }
     ],
     "stateMutability": "view",
     "type": "function"
@@ -230,14 +358,28 @@
   {
     "inputs": [],
     "name": "owner",
-    "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [
-      { "internalType": "string", "name": "productId", "type": "string" },
-      { "internalType": "address", "name": "user", "type": "address" }
+      {
+        "internalType": "string",
+        "name": "productId",
+        "type": "string"
+      },
+      {
+        "internalType": "address",
+        "name": "user",
+        "type": "address"
+      }
     ],
     "name": "renewProductSubscription",
     "outputs": [],
@@ -246,7 +388,11 @@
   },
   {
     "inputs": [
-      { "internalType": "string", "name": "productId", "type": "string" }
+      {
+        "internalType": "string",
+        "name": "productId",
+        "type": "string"
+      }
     ],
     "name": "renewProductSubscriptions",
     "outputs": [],
@@ -255,7 +401,11 @@
   },
   {
     "inputs": [
-      { "internalType": "uint256", "name": "tokenId", "type": "uint256" }
+      {
+        "internalType": "uint256",
+        "name": "tokenId",
+        "type": "uint256"
+      }
     ],
     "name": "renewSubscription",
     "outputs": [],
@@ -264,7 +414,11 @@
   },
   {
     "inputs": [
-      { "internalType": "uint256[]", "name": "tokenIds", "type": "uint256[]" }
+      {
+        "internalType": "uint256[]",
+        "name": "tokenIds",
+        "type": "uint256[]"
+      }
     ],
     "name": "renewSubscriptions",
     "outputs": [],
@@ -280,7 +434,11 @@
   },
   {
     "inputs": [
-      { "internalType": "string", "name": "productId", "type": "string" }
+      {
+        "internalType": "string",
+        "name": "productId",
+        "type": "string"
+      }
     ],
     "name": "subscribe",
     "outputs": [],
@@ -289,7 +447,11 @@
   },
   {
     "inputs": [
-      { "internalType": "address", "name": "newOwner", "type": "address" }
+      {
+        "internalType": "address",
+        "name": "newOwner",
+        "type": "address"
+      }
     ],
     "name": "transferOwnership",
     "outputs": [],

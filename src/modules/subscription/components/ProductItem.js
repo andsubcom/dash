@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import styled from '@emotion/styled'
-// import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { prop } from 'styled-tools'
 import { useTheme } from '@emotion/react'
 
@@ -47,13 +47,13 @@ function ProductItem({ product }) {
         <Cell w="150px">
           <Box>
             <Label>Price</Label>
-            <Bold>{product.price} <Link href="#" target="_blank">{product?.token?.symbol}</Link></Bold>
+            <Bold>{product.price} <A href="#" target="_blank">{product?.token?.symbol}</A></Bold>
           </Box>
         </Cell>
         <Cell w="170px">
           <Box>
             <Label>Total Revenue</Label>
-            <Bold>324 {product?.token?.symbol} <Link href="#" onClick={onOpen}>Claim</Link></Bold>
+            <Bold>324 {product?.token?.symbol} <Link to={`/product/${product.id}`}>Claim</Link></Bold>
           </Box>
         </Cell>
         <Cell w="132px">
@@ -123,7 +123,7 @@ const Label = styled(Box)`
   margin-bottom: 8px;
 `
 
-const Link = styled.a`
+const A = styled.a`
   cursor: pointer;
   color: ${prop('theme.colors.primary')};
   font-weight: normal;

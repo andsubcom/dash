@@ -4,6 +4,7 @@ import { Switch, Route, withRouter } from 'react-router-dom'
 import PublicLayout from 'layout/PublicLayout'
 import AdminLayout from 'layout/AdminLayout'
 
+import ChargePage from 'pages/ChargePage'
 import ProductPage from 'pages/ProductPage'
 import ProductCreatePage from 'pages/ProductCreatePage'
 import DashboardPage from 'pages/DashboardPage'
@@ -28,6 +29,7 @@ const Routes = () => {
     <Switch>
       <PublicRoute exact path={'/'} component={ProductPage} layout={AdminLayout} />
       <PublicRoute exact path={'/product/create'} component={ProductCreatePage} layout={AdminLayout} />
+      <PublicRoute exact path={'/product/:pid'} component={ChargePage} layout={AdminLayout} />
       <PublicRoute exact path={'/dashboard'} component={DashboardPage} layout={AdminLayout} />
       <PublicRoute path={'/login'} component={LoginPage} layout={PublicLayout} />
       {/* <PublicRoute component={Error404Page} {...unauthRouteProps} /> */}

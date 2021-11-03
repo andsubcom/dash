@@ -81,6 +81,23 @@ export const useSubscriptionInfoByOrg = (account) => {
   return { products, refetch: fetch }
 }
 
+export const useProductSubscribers = (productId) => {
+  const response = useContractCall({
+    abi: new Interface(SUBSCRIPTION_HUB_ABI),
+    address: process.env.REACT_APP_SUBSCRIPTION_HUB_ADDRESS,
+    method: 'getProductSubscribers',
+    args: [productId]
+  })
+  return response ? response[0].map((address, i) => {
+    return {
+      address: response[0][i],
+      lastPeriodStartTime: response[1][i],
+      periods: response[2][i],
+      paymentAmount: response[3][i]
+    }
+  }) : []
+}
+
 export const useCreateProduct = function() {
   const abi = new Interface(SUBSCRIPTION_HUB_ABI)
   const contract = new Contract(ANDSUB_HUB_ADDRESS, abi)
