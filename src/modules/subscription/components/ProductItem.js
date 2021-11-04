@@ -3,40 +3,20 @@ import PropTypes from 'prop-types'
 import styled from '@emotion/styled'
 import { Link } from 'react-router-dom'
 import { prop } from 'styled-tools'
-import { useTheme } from '@emotion/react'
 
 import { Flex, HStack, Box, useDisclosure } from '@chakra-ui/react'
-import { ipfsToGateway } from 'utils/helpers'
+import { IPFSImage } from 'elements'
 import WithdrawModal from './WithdrawModal'
 
 function ProductItem({ product }) {
-  const theme = useTheme()
   const { isOpen, onOpen, onClose } = useDisclosure()
-
-  const [metadata, setMetadata] = useState()
-
-  const metadataUrl = ipfsToGateway(product.metadataUri || '')
-  const imageUrl = metadata ? ipfsToGateway(metadata.image) : undefined
-
-  useEffect(() => {
-    fetch(metadataUrl)
-      .then(res => res.json())
-      .then(
-          (metadata) => {
-            setMetadata(metadata)
-          },
-          (error) => {
-            // setError(error)
-          }
-      )
-  }, [metadataUrl])
 
   return (
     <Element>
       
       <HStack spacing="40px">
         <Cell w="104">
-          <ImageContainer background={`url('${imageUrl}') #C4C4C4`} />
+          <IPFSImage IPFSUrl={product.metadataUri} />
         </Cell>
         <Cell w="190px">
           <Box>

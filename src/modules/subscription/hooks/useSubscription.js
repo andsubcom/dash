@@ -21,19 +21,14 @@ export const fetchOwnerProducts = async function (provider, account) {
 }
 
 
-export const useSubscriptionInfo = (productId) => {
-  const [amount, payableToken, period, organizationId] = useContractCall({
+export const useProductInfo = (productId) => {
+  const response = useContractCall({
     abi: new Interface(SUBSCRIPTION_HUB_ABI),
     address: process.env.REACT_APP_SUBSCRIPTION_HUB_ADDRESS,
-    method: 'getSubscriptionInfo',
+    method: 'getProductInfo',
     args: [productId]
-  }) ?? []
-  return {
-    amount,
-    payableToken,
-    period,
-    organizationId
-  }
+  }) ?? {}
+  return response
 }
 
 export const useIsAccountSubscribed = (account, productId) => {

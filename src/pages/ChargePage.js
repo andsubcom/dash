@@ -10,12 +10,13 @@ import { Icon } from '@iconify/react'
 import { PageWrapper, Sidebar, PageContainer } from 'modules/layout'
 import styled from '@emotion/styled'
 import { PageHeader } from 'modules/admin'
-import { Loader, BackLink, Card } from 'elements'
+import { Loader, BackLink, Card, IPFSImage } from 'elements'
 
-import { useProductSubscribers, useRenewProductSubscriptions } from 'modules/subscription'
+import { useProductSubscribers, useRenewProductSubscriptions, useProductInfo } from 'modules/subscription'
 
 const ChargePage = () => {
   const { pid } = useParams()
+  const product = useProductInfo(pid)
 
   const subscribers = useProductSubscribers(pid)
   const totalSum = subscribers.reduce((acc, el) => {
@@ -25,7 +26,7 @@ const ChargePage = () => {
   const [isMining, setIsMining] = useState(true)
   const { state, send } = useRenewProductSubscriptions()
 
-  const handleWithdraw = () => {
+  const handleCharge = () => {
     send(pid)
   }
 
@@ -54,7 +55,7 @@ const ChargePage = () => {
       return (<Button
         key="0"
         disabled
-        onClick={handleWithdraw}
+        onClick={handleCharge}
         padding='0px 32px'
         colorScheme='main'
         borderRadius='40px'
@@ -68,7 +69,7 @@ const ChargePage = () => {
     } else {
       return (<Button
         key="0"
-        onClick={handleWithdraw}
+        onClick={handleCharge}
         padding='0px 32px'
         colorScheme='main'
         borderRadius='40px'
@@ -82,6 +83,8 @@ const ChargePage = () => {
     }
   }
 
+  console.log('subscribers', subscribers)
+
   return (
     <PageWrapper>
       <Sidebar />
@@ -89,13 +92,13 @@ const ChargePage = () => {
         <BackLink>
           <Link to='/'>Back to Products</Link>
         </BackLink>
-        <PageHeader mt={'16px'} mb={'40px'} title='Product Name' />
+        <PageHeader mt={'16px'} mb={'40px'} title={product.name} />
         <Flex
           flexDirection='row'
           mb='40px'
         >
           <Card padding='16px' width='592px' height='160px' mr='24px'>
-            <ImageContainer background={`url(https://ipfs.io/ipfs/QmfHCCFvUnQ2pY3Fb1b6vWJTUEyAXyahur3Gf5hTGTz7JP) #C4C4C4`} />
+            <IPFSImage width='128px' height='128px' IPFSUrl={product.metadataUri} />
           </Card>
           <Card
             width='416px'
@@ -111,7 +114,7 @@ const ChargePage = () => {
                 <Flex flexDirection='row' alignItems='flex-end'>
                   <Price
                     fontSize='32px'>
-                      324.54
+                      {totalSum}
                   </Price>
                   <Label ml='8px' mb='6px'>USDX</Label>            
                 </Flex>
@@ -124,7 +127,7 @@ const ChargePage = () => {
         </Flex>
         <Flex flexDirection='row'>
           <Subheader>Subscribers</Subheader>
-          <Subheader ml='12px' color='#93959D'>4</Subheader>
+          <Subheader ml='12px' color='#93959D'>{subscribers.length}</Subheader>
         </Flex>
         <Table flexDirection='column' mt='24px' width='1032px'>
           <HStack padding='8px 22px' mb='8px'>
@@ -133,18 +136,30 @@ const ChargePage = () => {
             <Box w='210px'><THeader>Total</THeader></Box>
             <Box><THeader>Available</THeader></Box>
           </HStack>
-          <Row background='#f5f6f7'>
-            <Box w='310px'><A>0x95E42076420764407A</A></Box>
-            <Box w='310px'><A>0x95E42076420764407A</A></Box>
-            <Box w='210px'><Cell>324.0 USDX</Cell></Box>
-            <Box><Cell fontWeight='600'>24.0 USDX</Cell></Box>
-          </Row>
-          <Row background='#fff'>
-            <Box w='310px'><A>0x95E42076420764407A</A></Box>
-            <Box w='310px'><A>0x95E42076420764407A</A></Box>
-            <Box w='210px'><Cell>324.0 USDX</Cell></Box>
-            <Box><Cell fontWeight='600'>24.0 USDX</Cell></Box>
-          </Row>
+          { subscribers.map((sub, i) => {
+            return (
+              <Row background={i % 2 === 1 ? '#fff' : '#f5f6f7'}>
+                <Box w='310px'>
+                  <A href={`https://ropsten.etherscan.io/address/` + sub.address} target='_blank'>{sub.address &&
+                    `${sub.address.slice(0, 24)}...${sub.address.slice(
+                      sub.address.length - 4,
+                      sub.address.length
+                    )}`}
+                  </A>
+                </Box>
+                <Box w='310px'>
+                  <A href={`https://ropsten.etherscan.io/address/` + sub.address} target='_blank'>{sub.address &&
+                    `${sub.address.slice(0, 24)}...${sub.address.slice(
+                      sub.address.length - 4,
+                      sub.address.length
+                    )}`}
+                  </A>
+                </Box>
+                <Box w='210px'><Cell>324.0 USDX</Cell></Box>
+                <Box><Cell fontWeight='600'>{formatUnits(sub.paymentAmount, 18)} USDX</Cell></Box>
+              </Row>
+            )
+          }) }
         </Table>
         {/* <Flex><Text>Total summ: {totalSum}</Text> {renderButton()}</Flex>
         { subscribers.map(el => {
@@ -157,18 +172,6 @@ const ChargePage = () => {
     </PageWrapper>
   )
 }
-
-
-const ImageContainer = styled(Box)`
-  background-size: cover;
-  background-position: 50% 50%;
-  background-repeat: no-repeat;
-  width: 128px;
-  height: 128px;
-  border: 1px solid #F1F3F6;
-  box-sizing: border-box;
-  border-radius: 8px;
-`
 
 const Label = styled(Text)`
   color: #93959D;
