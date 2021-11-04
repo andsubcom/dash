@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
+import { formatUnits } from '@ethersproject/units'
 import styled from '@emotion/styled'
 import { Link } from 'react-router-dom'
 import { prop } from 'styled-tools'
@@ -8,9 +9,16 @@ import { Flex, HStack, Box, useDisclosure } from '@chakra-ui/react'
 import { IPFSImage } from 'elements'
 import WithdrawModal from './WithdrawModal'
 
+import { useProductSubscribers } from 'modules/subscription'
+
 function ProductItem({ product }) {
   const { isOpen, onOpen, onClose } = useDisclosure()
-
+  
+  const subscribers = useProductSubscribers(product.id)
+  const totalSum = subscribers.reduce((acc, el) => {
+    return acc + +(formatUnits(el.paymentAmount, product?.token?.decimals))
+  }, 0)
+  console.log('ppppp', product.token)
   return (
     <Element>
       
@@ -32,8 +40,8 @@ function ProductItem({ product }) {
         </Cell>
         <Cell w="170px">
           <Box>
-            <Label>Total Revenue</Label>
-            <Bold>324 {product?.token?.symbol} <Link to={`/product/${product.id}`}>Claim</Link></Bold>
+            <Label>Available to Claim</Label>
+            <Bold>{totalSum} {product?.token?.symbol} <Link to={`/product/${product.id}`}>Claim</Link></Bold>
           </Box>
         </Cell>
         <Cell w="132px">
@@ -67,17 +75,6 @@ const Cell = styled(Flex)`
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
-`
-
-const ImageContainer = styled(Box)`
-  background-size: cover;
-  background-position: 50% 50%;
-  background-repeat: no-repeat;
-  width: 104px;
-  height: 102px;
-  border: 1px solid #F1F3F6;
-  box-sizing: border-box;
-  border-radius: 8px;
 `
 
 const Slug = styled.a`

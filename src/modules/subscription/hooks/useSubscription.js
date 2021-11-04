@@ -83,12 +83,14 @@ export const useProductSubscribers = (productId) => {
     method: 'getProductSubscribers',
     args: [productId]
   })
+  console.log('response -> ', response)
   return response ? response[0].map((address, i) => {
     return {
       address: response[0][i],
       lastPeriodStartTime: response[1][i],
-      periods: response[2][i],
-      paymentAmount: response[3][i]
+      subscriptionStartTime: response[2][i],
+      paymentAmount: response[3][i],
+      totalAmount: response[4][i]
     }
   }) : []
 }

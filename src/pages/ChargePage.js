@@ -6,6 +6,7 @@ import { useParams } from 'react-router-dom'
 import toast from 'react-hot-toast'
 import { Link } from 'react-router-dom'
 import { Icon } from '@iconify/react'
+import { format } from 'date-fns'
 
 import { PageWrapper, Sidebar, PageContainer } from 'modules/layout'
 import styled from '@emotion/styled'
@@ -13,14 +14,17 @@ import { PageHeader } from 'modules/admin'
 import { Loader, BackLink, Card, IPFSImage } from 'elements'
 
 import { useProductSubscribers, useRenewProductSubscriptions, useProductInfo } from 'modules/subscription'
+import { TOKENS } from 'utils/constants'
 
 const ChargePage = () => {
   const { pid } = useParams()
   const product = useProductInfo(pid)
+  const token = Object.keys(TOKENS).map(key => TOKENS[key])
+      .find(token => token?.address?.toUpperCase() === product?.payableToken?.toUpperCase()) || {}
 
   const subscribers = useProductSubscribers(pid)
   const totalSum = subscribers.reduce((acc, el) => {
-    return acc + +(formatUnits(el.paymentAmount, 18))
+    return acc + +(formatUnits(el.paymentAmount, token.decimals || 18))
   }, 0)
 
   const [isMining, setIsMining] = useState(true)
@@ -132,8 +136,8 @@ const ChargePage = () => {
         <Table flexDirection='column' mt='24px' width='1032px'>
           <HStack padding='8px 22px' mb='8px'>
             <Box w='310px'><THeader>Address</THeader></Box>
-            <Box w='310px'><THeader>Token</THeader></Box>
-            <Box w='210px'><THeader>Total</THeader></Box>
+            <Box w='230px'><THeader>Subscribed at</THeader></Box>
+            <Box w='230px'><THeader>Payed</THeader></Box>
             <Box><THeader>Available</THeader></Box>
           </HStack>
           { subscribers.map((sub, i) => {
@@ -147,15 +151,10 @@ const ChargePage = () => {
                     )}`}
                   </A>
                 </Box>
-                <Box w='310px'>
-                  <A href={`https://ropsten.etherscan.io/address/` + sub.address} target='_blank'>{sub.address &&
-                    `${sub.address.slice(0, 24)}...${sub.address.slice(
-                      sub.address.length - 4,
-                      sub.address.length
-                    )}`}
-                  </A>
+                <Box w='230px'>
+                  <Cell>{format(sub.subscriptionStartTime * 1000, "dd.MM.yyyy HH:mm")}</Cell>
                 </Box>
-                <Box w='210px'><Cell>324.0 USDX</Cell></Box>
+                <Box w='230px'><Cell>{formatUnits(sub.totalAmount, 18)} USDX</Cell></Box>
                 <Box><Cell fontWeight='600'>{formatUnits(sub.paymentAmount, 18)} USDX</Cell></Box>
               </Row>
             )
@@ -217,6 +216,20 @@ const Cell = styled(Text)`
   ${prop('theme.colors.primary')};
   font-size: 16px;
   line-height: 24px;
+`
+
+const ProductCell = styled(Flex)`
+  height: 100%;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+`
+
+const Bold = styled(Box)`
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
+  color: #081343;
 `
 
 
