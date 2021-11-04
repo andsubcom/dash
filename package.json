@@ -47,6 +47,7 @@
     "@ethersproject/contracts": "5.2.0"
   },
   "devDependencies": {
+    "@iconify/react": "^3.0.1",
     "@types/node": "^16.9.6",
     "@types/react": "^17.0.24",
     "fastify-tsconfig": "^1.0.1",

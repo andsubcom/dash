@@ -33,7 +33,7 @@ function PageHeader({ title, subtitle, ...props }) {
 }
 
 const PageTitle = styled(Text)`
-  font-weight: 600;
+  font-weight: 500;
   font-size: 40px;
   line-height: 47px;
   letter-spacing: -0.02em;

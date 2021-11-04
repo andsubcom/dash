@@ -38,7 +38,7 @@ const Element = styled(Flex)`
   border: 4px solid #FFFFFF;
   box-sizing: border-box;
   box-shadow: 0px 0px 24px 8px rgba(0, 0, 0, 0.02);
-  border-radius: 24px;
+  border-radius: 16px;
 `
 
 StatsCard.propTypes = {

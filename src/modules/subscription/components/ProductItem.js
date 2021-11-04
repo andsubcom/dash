@@ -78,7 +78,7 @@ const Element = styled(Flex)`
   border: 2px solid #FFFFFF;
   box-sizing: border-box;
   box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.04);
-  border-radius: 24px;
+  border-radius: 16px;
   padding: 8px;
 `
 
@@ -97,7 +97,7 @@ const ImageContainer = styled(Box)`
   height: 102px;
   border: 1px solid #F1F3F6;
   box-sizing: border-box;
-  border-radius: 16px;
+  border-radius: 8px;
 `
 
 const Slug = styled.a`
