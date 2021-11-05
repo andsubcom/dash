@@ -1,38 +1,26 @@
 import React, { useState, useEffect } from 'react'
-import { Flex, Box, Button, Text, HStack } from '@chakra-ui/react'
+import { Flex, Box, Button, Text as _Text, HStack, VStack, Stack } from '@chakra-ui/react'
 import { prop } from 'styled-tools'
 import { formatUnits } from '@ethersproject/units'
 import { useParams } from 'react-router-dom'
 import toast from 'react-hot-toast'
 import { Link } from 'react-router-dom'
-import { Icon } from '@iconify/react'
 import { format } from 'date-fns'
 
 import { PageWrapper, Sidebar, PageContainer } from 'modules/layout'
 import styled from '@emotion/styled'
 import { PageHeader } from 'modules/admin'
-import { Loader, BackLink, Card, IPFSImage } from 'elements'
+import { Loader, BackLink, Card, IPFSImage, StatsCard } from 'elements'
 
 import { useProductSubscribers, useRenewProductSubscriptions, useProductInfo } from 'modules/subscription'
-import { TOKENS } from 'utils/constants'
+import { TOKENS, SUBSCRIPTION_PERIODS } from 'utils/constants'
 
 const ChargePage = () => {
   const { pid } = useParams()
   const product = useProductInfo(pid)
-  const token = Object.keys(TOKENS).map(key => TOKENS[key])
-      .find(token => token?.address?.toUpperCase() === product?.payableToken?.toUpperCase()) || {}
-
   const subscribers = useProductSubscribers(pid)
-  const totalSum = subscribers.reduce((acc, el) => {
-    return acc + +(formatUnits(el.paymentAmount, token.decimals || 18))
-  }, 0)
-
   const [isMining, setIsMining] = useState(true)
   const { state, send } = useRenewProductSubscriptions()
-
-  const handleCharge = () => {
-    send(pid)
-  }
 
   useEffect(() => {
     switch (state.status) {
@@ -54,40 +42,55 @@ const ChargePage = () => {
     }
   }, [state])
 
+  const token = Object.keys(TOKENS).map(key => TOKENS[key])
+      .find(token => token?.address?.toUpperCase() === product?.payableToken?.toUpperCase()) || {}
+  const totalSum = subscribers.reduce((acc, el) => {
+    return acc + +(formatUnits(el.paymentAmount, token.decimals || 18))
+  }, 0)
+
+  const totalPayedSum = subscribers.reduce((acc, el) => {
+    return acc + +(formatUnits(el.totalAmount, token.decimals || 18))
+  }, 0)
+
+
+  const handleCharge = () => {
+    send(pid)
+  }
+
   const renderButton = () => {
     if(isMining) {
       return (<Button
         key="0"
         disabled
         onClick={handleCharge}
-        padding='0px 32px'
+        width='100%'
+        padding='4px 32px'
         colorScheme='main'
         borderRadius='40px'
         textTransform='uppercase'
-        fontSize='14px'
+        fontSize='16px'
         fontWeight='500'
         size="md"
       >
-      <Loader width={5} height={5} mr={2} /> Charge
+      <Loader width={5} height={5} mr={2} /> Claim
     </Button>)
     } else {
       return (<Button
         key="0"
         onClick={handleCharge}
-        padding='0px 32px'
+        padding='4px 32px'
+        width='100%'
         colorScheme='main'
         borderRadius='40px'
         textTransform='uppercase'
-        fontSize='14px'
+        fontSize='16px'
         fontWeight='500'
         size="md"
       >
-      Charge
+      Claim
     </Button>)
     }
   }
-
-  console.log('subscribers', subscribers)
 
   return (
     <PageWrapper>
@@ -96,14 +99,55 @@ const ChargePage = () => {
         <BackLink>
           <Link to='/'>Back to Products</Link>
         </BackLink>
-        <PageHeader mt={'16px'} mb={'40px'} title={product.name} />
-        <Flex
-          flexDirection='row'
-          mb='40px'
-        >
-          <Card padding='16px' width='592px' height='160px' mr='24px'>
-            <IPFSImage width='128px' height='128px' IPFSUrl={product.metadataUri} />
+        <PageHeader mt={'16px'} mb={'40px'} title={product?.name} subtitle='Created on January 3rd 2021' />
+        <Flex>
+          <IPFSImage width='240px' height='240px' IPFSUrl={product?.metadataUri} />
+          <Card w='768px' height='240px' ml='24px' flexDirection='column'>
+            <Flex p='16px 24px' borderBottom='1px solid #FfF6F7'>
+              <Label fontWeight='600'>DETAILS</Label>
+            </Flex>
+            <Flex p='16px 24px'>
+              <VStack width='150px' alignItems='flex-start' spacing='16px'>
+                <Label>Name</Label>
+                <Label>Link</Label>
+                <Label>Frequency</Label>
+                <Label>Price</Label>
+              </VStack>
+              <VStack alignItems='flex-start'  spacing='16px'>
+                <Text>{product?.name}</Text>
+                <A href={`https://checkout.andsub.com/${product?.id}`} target='_blank'>https://checkout.andsub.com/{product?.id}</A>
+                <Text>{product && SUBSCRIPTION_PERIODS[product.period.toNumber()]}</Text>
+                <Text>{product && formatUnits(product.price.toString(), token.decimals || 18)} <A href="#" target="_blank">{token?.symbol}</A></Text>
+              </VStack>
+            </Flex>
           </Card>
+        </Flex>
+        <Flex mt='24px'>
+          <Card
+            width='240px'
+            padding='16px'
+            height='140px'>
+              <Flex width='100%' alignItems='center' flexDirection='column'>
+                <Label>Amount to Claim</Label>
+                <Flex mt='4px' mb='8px' flexDirection='row' alignItems='flex-end'>
+                  <Price
+                    fontSize='32px'>
+                      {totalSum}
+                  </Price>
+                  <Label ml='6px' mb='2px'>{token?.symbol}</Label>            
+                </Flex>
+                { renderButton() }
+              </Flex>
+          </Card>
+          <Stack direction="row" spacing='24px' ml='24px' mb='40px'>
+            <StatsCard height='140px' title="Montly Revenu" stat="0" bg="#EEF1F6" />
+            <StatsCard height='140px' title="Daily Revenu" stat="0" bg="#E4F4F1" />
+            <StatsCard height='140px' title="Total Revenue" stat={totalPayedSum + ' ' + token?.symbol} bg="#ECECFF" />
+          </Stack>
+        </Flex>
+        {/* <Flex
+          flexDirection='row'
+        >
           <Card
             width='416px'
             height='160px'
@@ -128,8 +172,8 @@ const ChargePage = () => {
               </Flex>
             </Flex>
           </Card>
-        </Flex>
-        <Flex flexDirection='row'>
+        </Flex> */}
+        <Flex mt='40px' flexDirection='row'>
           <Subheader>Subscribers</Subheader>
           <Subheader ml='12px' color='#93959D'>{subscribers.length}</Subheader>
         </Flex>
@@ -172,19 +216,25 @@ const ChargePage = () => {
   )
 }
 
-const Label = styled(Text)`
+const Label = styled(_Text)`
   color: #93959D;
   font-size: 16px;
   line-height: 24px;
 `
 
-const Price = styled(Text)`
+const Text = styled(_Text)`
   color: ${prop('theme.colors.font.primary')};
-  font-size: 32px;
-  line-height: 48px;
+  font-size: 16px;
+  line-height: 24px;
 `
 
-const Subheader = styled(Text)`
+const Price = styled(_Text)`
+  color: ${prop('theme.colors.font.primary')};
+  font-size: 21px;
+  line-height: 32px;
+`
+
+const Subheader = styled(_Text)`
   font-size: 24px;
   line-height: 36px;
 `
@@ -193,7 +243,7 @@ const Table = styled(Card)`
   padding: 16px;
 `
 
-const THeader = styled(Text)`
+const THeader = styled(_Text)`
   font-size: 16px;
   line-height: 24px;
   color: #9CA1B4;
@@ -212,26 +262,11 @@ const A = styled.a`
   line-height: 24px;
 `
 
-const Cell = styled(Text)`
+const Cell = styled(_Text)`
   ${prop('theme.colors.primary')};
   font-size: 16px;
   line-height: 24px;
 `
-
-const ProductCell = styled(Flex)`
-  height: 100%;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
-`
-
-const Bold = styled(Box)`
-  font-weight: 600;
-  font-size: 16px;
-  line-height: 24px;
-  color: #081343;
-`
-
 
 ChargePage.propTypes = {
 

@@ -27,7 +27,7 @@ export const useProductInfo = (productId) => {
     address: process.env.REACT_APP_SUBSCRIPTION_HUB_ADDRESS,
     method: 'getProductInfo',
     args: [productId]
-  }) ?? {}
+  })
   return response
 }
 

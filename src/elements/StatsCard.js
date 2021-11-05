@@ -6,7 +6,7 @@ import { Flex } from '@chakra-ui/react'
 
 function StatsCard({title, stat, ...props}) {
   return (
-    <Element bg="#ececef" {...props}>
+    <Element width='240px' height='160px' bg="#ececef" {...props}>
       <Title>{title}</Title>
       <Stat>{stat}</Stat>
     </Element>
@@ -16,8 +16,8 @@ function StatsCard({title, stat, ...props}) {
 const Stat = styled.div`
   display: flex;
   color: #081343;
-  font-size: 32px;
-  line-height: 48px;
+  font-size: 28px;
+  line-height: 42px;
 `
 
 const Title = styled.div`
@@ -29,8 +29,6 @@ const Title = styled.div`
 `
 
 const Element = styled(Flex)`
-  width: 240px;
-  height: 160px;
   padding: 16px 24px;
   flex-direction: column;
   align-items: flex-start;
