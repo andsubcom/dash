@@ -33,9 +33,9 @@ function Header(props) {
         <ConnectButton handleOpenModal={onOpen} />
       </Flex>
       <MenuList>
-        <MenuItem to='/dashboard' active={location.pathname === '/dashboard'}> 
+        {/* <MenuItem to='/dashboard' active={location.pathname === '/dashboard'}> 
           <Flex marginRight='12px'> <Wallet set="bold" primaryColor={location.pathname === '/dashboard' ? '#3850fe' : '#a8aab2'}/></Flex> Dashboard
-        </MenuItem>
+        </MenuItem> */}
         <MenuItem to='/' active={['/', '/product/create'].includes(location.pathname)}> 
           <Flex marginRight='12px'> <Document set="bold" primaryColor={['/', '/product/create'].includes(location.pathname) ? '#3850fe' : '#a8aab2'}/></Flex> Products
         </MenuItem>

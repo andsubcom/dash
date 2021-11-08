@@ -52,6 +52,7 @@ const ChargePage = () => {
     return acc + +(formatUnits(el.totalAmount, token.decimals || 18))
   }, 0)
 
+  const monthlyRevenuSum = product?.price ? subscribers.length * (+(formatUnits(product?.price, product?.token?.decimals || 18)) * (60 * 60 * 24 * 30 / product?.period)) : 0
 
   const handleCharge = () => {
     send(pid)
@@ -72,7 +73,7 @@ const ChargePage = () => {
         fontWeight='500'
         size="md"
       >
-      <Loader width={5} height={5} mr={2} /> Claim
+      <Loader width={5} height={5} mr={2} /> Charge
     </Button>)
     } else {
       return (<Button
@@ -87,7 +88,7 @@ const ChargePage = () => {
         fontWeight='500'
         size="md"
       >
-      Claim
+      Charge
     </Button>)
     }
   }
@@ -99,7 +100,7 @@ const ChargePage = () => {
         <BackLink>
           <Link to='/'>Back to Products</Link>
         </BackLink>
-        <PageHeader mt={'16px'} mb={'40px'} title={product?.name} subtitle='Created on January 3rd 2021' />
+        <PageHeader mt={'16px'} mb={'40px'} title={product?.name} />
         <Flex>
           <IPFSImage width='240px' height='240px' IPFSUrl={product?.metadataUri} />
           <Card w='768px' height='240px' ml='24px' flexDirection='column'>
@@ -117,62 +118,39 @@ const ChargePage = () => {
                 <Text>{product?.name}</Text>
                 <A href={`https://checkout.andsub.com/${product?.id}`} target='_blank'>https://checkout.andsub.com/{product?.id}</A>
                 <Text>{product && SUBSCRIPTION_PERIODS[product.period.toNumber()]}</Text>
-                <Text>{product && formatUnits(product.price.toString(), token.decimals || 18)} <A href="#" target="_blank">{token?.symbol}</A></Text>
+                <Text>{product && formatUnits(product.price.toString(), token.decimals || 18)} <A href={`https://ropsten.etherscan.io/address/${product?.token?.address}`} target="_blank">{token?.symbol}</A></Text>
               </VStack>
             </Flex>
           </Card>
         </Flex>
         <Flex mt='24px'>
-          <Card
+          <Stack direction="row" spacing='24px' ml='264px' mb='40px'>
+            <StatsCard height='140px' title="Montly Revenue" stat={monthlyRevenuSum + ' ' + (token?.symbol || '')} bg="#EEF1F6" />
+            <StatsCard height='140px' title="Total Revenue" stat={totalPayedSum + ' ' + token?.symbol} bg="#ECECFF" />
+            <Card
             width='240px'
             padding='16px'
             height='140px'>
               <Flex width='100%' alignItems='center' flexDirection='column'>
-                <Label>Amount to Claim</Label>
+                <Label>Amount to Charge</Label>
                 <Flex mt='4px' mb='8px' flexDirection='row' alignItems='flex-end'>
                   <Price
                     fontSize='32px'>
                       {totalSum}
                   </Price>
-                  <Label ml='6px' mb='2px'>{token?.symbol}</Label>            
-                </Flex>
-                { renderButton() }
-              </Flex>
-          </Card>
-          <Stack direction="row" spacing='24px' ml='24px' mb='40px'>
-            <StatsCard height='140px' title="Montly Revenu" stat="0" bg="#EEF1F6" />
-            <StatsCard height='140px' title="Daily Revenu" stat="0" bg="#E4F4F1" />
-            <StatsCard height='140px' title="Total Revenue" stat={totalPayedSum + ' ' + token?.symbol} bg="#ECECFF" />
-          </Stack>
-        </Flex>
-        {/* <Flex
-          flexDirection='row'
-        >
-          <Card
-            width='416px'
-            height='160px'
-            border='4px solid #fff'
-            background='#E4F4F1'
-            padding='24px 24px 8px 24px'
-          >
-            <Flex flexDirection='row' w='100%' justifyContent='space-between'>
-              <Flex flexDirection='column'>
-                <Box ml='-4px' mt='-2px' mb='8px'><Icon icon="ic:round-file-download" color="#B7E1D9" width="40" height="40" /></Box>
-                <Label>Amount to Claim</Label>
-                <Flex flexDirection='row' alignItems='flex-end'>
+                  <Label ml='6px' mb='2px'>{token?.symbol}</Label>       
+                  <Label ml='6px' mr='6px' mb='2px'>from</Label>
                   <Price
                     fontSize='32px'>
-                      {totalSum}
+                      {subscribers.length}
                   </Price>
-                  <Label ml='8px' mb='6px'>USDX</Label>            
+                  <Label ml='6px' mb='2px'>Users</Label>       
                 </Flex>
-              </Flex>
-              <Flex>
                 { renderButton() }
               </Flex>
-            </Flex>
           </Card>
-        </Flex> */}
+          </Stack>
+        </Flex>
         <Flex mt='40px' flexDirection='row'>
           <Subheader>Subscribers</Subheader>
           <Subheader ml='12px' color='#93959D'>{subscribers.length}</Subheader>
@@ -181,7 +159,7 @@ const ChargePage = () => {
           <HStack padding='8px 22px' mb='8px'>
             <Box w='310px'><THeader>Address</THeader></Box>
             <Box w='230px'><THeader>Subscribed at</THeader></Box>
-            <Box w='230px'><THeader>Payed</THeader></Box>
+            <Box w='230px'><THeader>Revenue</THeader></Box>
             <Box><THeader>Available</THeader></Box>
           </HStack>
           { subscribers.map((sub, i) => {

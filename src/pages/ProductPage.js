@@ -22,6 +22,12 @@ const ProductPage = ({ history }) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const { products, refetch } = useSubscriptionInfoByOrg(account)
 
+  const handleProductClick = (e, product) => {
+    if(e.target.tagName !== 'A') {
+      history.push(`/product/${product.id}`)
+    }
+  }
+
   useEffect(() => {
     switch (state.status) {
       case 'Mining':
@@ -157,12 +163,12 @@ const ProductPage = ({ history }) => {
       <Sidebar />
       <PageContainer>
         <PageHeader mb={'40px'} title='Products' subtitle='Information about your current plan and usages' />
-        <Stack direction="row" spacing='24px' mb='40px'>
+        {/* <Stack direction="row" spacing='24px' mb='40px'>
           <StatsCard title="Monthly Revenue" stat="$31 240" bg="#ECECFF" />
           <StatsCard title="Active Subs" stat="3 432" bg="#EEF1F6" />
           <StatsCard title="Daily Subs" stat="14" bg="#E4F4F1" />
           <StatsCard title="Monthly Subs" stat="146" bg="#F5F1DA" />
-        </Stack>
+        </Stack> */}
         <Box>
           <Stack direction="row" alignItems="top" marginBottom="1.5rem">
             <Heading size="md">Manage products</Heading>
@@ -183,7 +189,7 @@ const ProductPage = ({ history }) => {
             </Stack>
           </Stack>
           <Stack w="1024px" direction="column" spacing="16px">
-            { subscriptions.map( product => (<ProductItem key={product.id} product={product} />)) }
+            { subscriptions.map( product => (<ProductItem onClick={(e) => {handleProductClick(e, product)}} key={product.id} product={product} />)) }
           </Stack>
         </Box>
 

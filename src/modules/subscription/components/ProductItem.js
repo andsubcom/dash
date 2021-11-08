@@ -11,7 +11,7 @@ import WithdrawModal from './WithdrawModal'
 
 import { useProductSubscribers } from 'modules/subscription'
 
-function ProductItem({ product }) {
+function ProductItem({ product, ...props }) {
   const { isOpen, onOpen, onClose } = useDisclosure()
   
   const subscribers = useProductSubscribers(product.id)
@@ -20,8 +20,7 @@ function ProductItem({ product }) {
   }, 0)
   console.log('ppppp', product.token)
   return (
-    <Element>
-      
+    <Element {...props}>
       <HStack spacing="40px">
         <Cell w="104">
           <IPFSImage IPFSUrl={product.metadataUri} />
@@ -35,13 +34,7 @@ function ProductItem({ product }) {
         <Cell w="150px">
           <Box>
             <Label>Price</Label>
-            <Bold>{product.price} <A href="#" target="_blank">{product?.token?.symbol}</A></Bold>
-          </Box>
-        </Cell>
-        <Cell w="170px">
-          <Box>
-            <Label>Available to Claim</Label>
-            <Bold>{totalSum} {product?.token?.symbol} <Link to={`/product/${product.id}`}>Claim</Link></Bold>
+            <Bold>{product.price} <A href={`https://ropsten.etherscan.io/address/${product?.token?.address}`} target="_blank">{product?.token?.symbol}</A></Bold>
           </Box>
         </Cell>
         <Cell w="132px">
@@ -50,9 +43,15 @@ function ProductItem({ product }) {
             <Bold>{product.period}</Bold>
           </Box>
         </Cell>
-        <Cell w="40px">
-          <Dots src='/dots.png' />
+        <Cell w="170px">
+          <Box>
+            <Label>Available to Charge</Label>
+            <Bold>{totalSum} {product?.token?.symbol} <Link to={`/product/${product.id}`}>Charge</Link></Bold>
+          </Box>
         </Cell>
+        {/* <Cell w="40px">
+          <Dots src='/dots.png' />
+        </Cell> */}
       </HStack>
       <WithdrawModal isOpen={isOpen} onClose={onClose} product={product} />
     </Element>
@@ -68,6 +67,11 @@ const Element = styled(Flex)`
   box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.04);
   border-radius: 16px;
   padding: 8px;
+  cursor: pointer;
+
+  &:hover {
+    background: #F8F8F8;
+  }
 `
 
 const Cell = styled(Flex)`
