@@ -6,6 +6,8 @@ import { ChainId, DAppProvider } from '@usedapp/core'
 import { Toaster } from 'react-hot-toast'
 import "./App.css"
 
+
+
 import Router from './router'
 
 const config = {

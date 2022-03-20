@@ -5,7 +5,7 @@ import { Interface } from '@ethersproject/abi'
 import SUBSCRIPTION_HUB_ABI from 'assets/abi/SubscriptionsHub.json'
 
 
-const ANDSUB_HUB_ADDRESS = process.env.REACT_APP_SUBSCRIPTION_HUB_ADDRESS
+const ANDSUB_HUB_ADDRESS = "0xe877E43eAD9182aAb9e1f6F2F5340cC62B2492DB"
 // REACT_APP_SUBSCRIPTION_HUB_ADDRESS=0xe877E43eAD9182aAb9e1f6F2F5340cC62B2492DB
 
 export const fetchProductInfo = async function (provider, productId) {
@@ -81,14 +81,14 @@ export const useSubscriptionInfoByOrg = (account) => {
   return { products, refetch: fetch }
 }
 
-export const useCreateProduct = function() {
+export const useCreateProduct = function () {
   const abi = new Interface(SUBSCRIPTION_HUB_ABI)
   const contract = new Contract(ANDSUB_HUB_ADDRESS, abi)
-  return useContractFunction(contract, 'createProduct', { transactionName: 'Create Product'})
+  return useContractFunction(contract, 'createProduct', { transactionName: 'Create Product' })
 }
 
-export const useWithdrawPaymentForProduct = function() {
+export const useWithdrawPaymentForProduct = function () {
   const abi = new Interface(SUBSCRIPTION_HUB_ABI)
   const contract = new Contract(ANDSUB_HUB_ADDRESS, abi)
-  return useContractFunction(contract, 'withdrawPaymentForProduct', { transactionName: 'Withdraw Payment'})
+  return useContractFunction(contract, 'withdrawPaymentForProduct', { transactionName: 'Withdraw Payment' })
 }

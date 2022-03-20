@@ -23,8 +23,8 @@ export default function ConnectButton({ handleOpenModal, buttonOnly }) {
         <Button
           onClick={handleConnectWallet}
           bg="#000"
-          color="#fff" 
-          fontSize="lg" 
+          color="#fff"
+          fontSize="lg"
           fontWeight="medium"
           borderRadius="4px"
           size="lg"
@@ -42,7 +42,7 @@ export default function ConnectButton({ handleOpenModal, buttonOnly }) {
     )
   }
 
-  if(buttonOnly) {
+  if (buttonOnly) {
     return renderConnectButton()
   }
 
